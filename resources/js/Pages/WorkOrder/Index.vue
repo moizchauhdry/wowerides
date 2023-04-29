@@ -67,16 +67,16 @@ defineProps({
                                         {{ work_order.wo_date }}
                                     </td>
                                     <td scope="row" class="px-6 py-4">
-                                        <b>{{ work_order.customer_name }}</b>
+                                        <b>{{ work_order.wo_customer_name }}</b>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.bike_brand }}
+                                        {{ work_order.wo_bike_brand }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.bike_model }}
+                                        {{ work_order.wo_bike_model }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.total_amount }}
+                                        {{ work_order.wo_total_amount }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <Link
@@ -89,7 +89,7 @@ defineProps({
                                             "
                                             >Edit</Link
                                         >
-                                        <a
+                                        <!-- <a
                                             :href="
                                                 route(
                                                     'work-order.pdf',
@@ -99,7 +99,7 @@ defineProps({
                                             class="focus:outline-none text-white bg-purple-500 hover:bg-purple-600 focus:ring-2 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-purple-900"
                                             target="_blank"
                                             >Invoice</a
-                                        >
+                                        > -->
                                     </td>
                                 </tr>
                             </tbody>

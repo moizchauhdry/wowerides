@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('work_orders', function (Blueprint $table) {
             $table->id();
-            $table->string('customer_name', 100);
-            $table->string('bike_brand', 100);
-            $table->string('bike_model', 100);
+            $table->string('wo_title', 100);
+            $table->string('wo_customer_name', 100);
+            $table->string('wo_bike_brand', 100);
+            $table->string('wo_bike_model', 100);
             $table->date('wo_date');
-            $table->date('return_date');
-            $table->float('total_amount');
+            $table->date('wo_return_date');
+            $table->date('wo_completed_date');
+            $table->float('wo_total_amount')->default(0);
             $table->timestamps();
         });
     }

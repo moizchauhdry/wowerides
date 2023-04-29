@@ -12,82 +12,56 @@ import Multiselect from "@vueform/multiselect";
 
 const props = defineProps({
     edit_mode: Boolean,
-    booking: Object,
+    work_order: Object,
 });
 
-const booking = usePage().props.booking;
+const work_order = usePage().props.work_order;
 
-var vehicles = [
-    { value: "Black Car Service", label: "Black Car Service" },
-    {
-        value: "Executive Black Car Service",
-        label: "Executive Black Car Service",
-    },
-    { value: "Black SUV Service", label: "Black SUV Service" },
-    { value: "Strech limo", label: "Strech limo" },
-    { value: "Van", label: "Van" },
-    { value: "Bus", label: "Bus" },
-    { value: "Sprinter", label: "Sprinter" },
-];
-
-var booking_plans = [
-    { value: "Airport Pick up", label: "Airport Pick up" },
-    { value: "Airport Drop off", label: "Airport Drop off" },
-    { value: "Sight Seeing", label: "Sight Seeing" },
-    { value: "Nightout", label: "Nightout" },
-    { value: "Wedding", label: "Wedding" },
-    { value: "Bachelor Party", label: "Bachelor Party" },
-    { value: "Others (As Directed)", label: "Others (As Directed)" },
-];
-
-var payment_types = [
-    { value: "Credit Card", label: "Credit Card" },
-    { value: "Cash Payment", label: "Cash Payment" },
+var wo_item_categories = [
+    { value: 1, label: "Service and Labor" },
+    { value: 2, label: "Parts and Materials" },
 ];
 
 const form = useForm({
-    booking_id: booking?.id,
+    wo_id: work_order?.id,
+    wo_title: work_order?.wo_title,
+    wo_customer_name: work_order?.wo_customer_name,
+    wo_bike_brand: work_order?.wo_bike_brand,
+    wo_bike_model: work_order?.wo_bike_model,
+    wo_date: work_order?.wo_date,
+    wo_return_date: work_order?.wo_return_date,
+    wo_completed_date: work_order?.wo_completed_date,
 
-    user_name: booking?.user_name,
-    user_email: booking?.user_email,
-    user_phone: booking?.user_phone,
+    wo_addr_customer_name: work_order?.billing_address?.wo_addr_customer_name,
+    wo_addr_str_address: work_order?.billing_address?.wo_addr_str_address,
+    wo_addr_city: work_order?.billing_address?.wo_addr_city,
+    wo_addr_state: work_order?.billing_address?.wo_addr_state,
+    wo_addr_zipcode: work_order?.billing_address?.wo_addr_zipcode,
+    wo_addr_phone: work_order?.billing_address?.wo_addr_phone,
+    wo_addr_email: work_order?.billing_address?.wo_addr_email,
 
-    pickup: booking?.pickup,
-    destination: booking?.destination,
-
-    passengers_no: booking?.passengers_no,
-    lugages_no: booking?.lugages_no,
-    vehicles_no: booking?.vehicles_no,
-    flight_no: booking?.flight_no,
-
-    price: booking?.price,
-    tip: booking?.tip,
-    toll: booking?.toll,
-    process_fee: booking?.process_fee,
-    discount: booking?.discount,
-
-    booking_date: booking?.booking_date,
-    vehicle_name: booking?.vehicle_name,
-    booking_plan: booking?.booking_plan,
-    payment_type: booking?.payment_type,
-
-    additional_msg: booking?.additional_msg,
+    wo_item_category_id: work_order?.items?.wo_item_category_id,
+    wo_item_name: work_order?.items?.wo_item_name,
+    wo_item_hours: work_order?.items?.wo_item_hours,
+    wo_item_rate: work_order?.items?.wo_item_rate,
 });
 
+console.log(work_order);
+
 const submit = () => {
-    form.post(route("booking.update"));
+    form.post(route("work-order.update"));
 };
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
 
 <template>
-    <Head :title="edit_mode ? 'Edit Booking' : 'Create Booking'" />
+    <Head :title="edit_mode ? 'Edit work_order' : 'Create work_order'" />
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ edit_mode ? "Edit" : "Create" }} Booking
+                {{ edit_mode ? "Edit" : "Create" }} Work Order
             </h2>
         </template>
 
@@ -96,384 +70,378 @@ const submit = () => {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 text-gray-900">
                         <form @submit.prevent="submit()" class="mt-6 space-y-6">
+                            <h4 class="text-2xl font-bold text-center">
+                                Work Order - Basic Information
+                            </h4>
+                            <hr
+                                class="w-48 h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
+                            />
+
                             <div
                                 class="grid gap-4 lg:grid-cols-3 md:grid-cols-2 grid-rows-1"
                             >
                                 <div>
-                                    <InputLabel for="user_name" value="Name" />
-
-                                    <TextInput
-                                        id="user_name"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.user_name"
-                                        required
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.user_name"
-                                    />
-                                </div>
-
-                                <div>
                                     <InputLabel
-                                        for="user_email"
-                                        value="Email"
-                                    />
-
-                                    <TextInput
-                                        id="user_email"
-                                        type="email"
-                                        class="mt-1 block w-full"
-                                        v-model="form.user_email"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.user_email"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="user_phone"
-                                        value="Phone"
-                                    />
-
-                                    <TextInput
-                                        id="user_phone"
-                                        type="tel"
-                                        class="mt-1 block w-full"
-                                        v-model="form.user_phone"
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.user_phone"
-                                    />
-                                </div>
-                            </div>
-
-                            <div
-                                class="grid gap-4 lg:grid-cols-2 md:grid-cols-2 grid-rows-1"
-                            >
-                                <div>
-                                    <InputLabel for="pickup" value="Pickup" />
-
-                                    <TextInput
-                                        id="pickup"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.pickup"
-                                        required
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.pickup"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="destination"
-                                        value="Destination"
-                                    />
-
-                                    <TextInput
-                                        id="destination"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.destination"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.destination"
-                                    />
-                                </div>
-                            </div>
-
-                            <div
-                                class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
-                            >
-                                <div>
-                                    <InputLabel
-                                        for="passengers_no"
-                                        value="No. of Passengers"
-                                    />
-
-                                    <TextInput
-                                        id="passengers_no"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.passengers_no"
-                                        required
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.passengers_no"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="lugages_no"
-                                        value="No. of Lugages"
-                                    />
-
-                                    <TextInput
-                                        id="lugages_no"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.lugages_no"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.lugages_no"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="vehicles_no"
-                                        value="No. of Vehicles"
-                                    />
-
-                                    <TextInput
-                                        id="vehicles_no"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.vehicles_no"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.vehicles_no"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="flight_no"
-                                        value="Flight No."
-                                    />
-
-                                    <TextInput
-                                        id="flight_no"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.flight_no"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.flight_no"
-                                    />
-                                </div>
-                            </div>
-
-                            <div
-                                class="grid gap-4 lg:grid-cols-5 md:grid-cols-2 grid-rows-1"
-                            >
-                                <div>
-                                    <InputLabel for="price" value="Price" />
-
-                                    <TextInput
-                                        id="price"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.price"
-                                        required
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.price"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel for="tip" value="Tip" />
-
-                                    <TextInput
-                                        id="tip"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.tip"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.tip"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel for="toll" value="Toll" />
-
-                                    <TextInput
-                                        id="toll"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.toll"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.toll"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="process_fee"
-                                        value="Processing Fee"
-                                    />
-
-                                    <TextInput
-                                        id="process_fee"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.process_fee"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.process_fee"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="discount"
-                                        value="Discount"
-                                    />
-
-                                    <TextInput
-                                        id="discount"
-                                        type="number"
-                                        class="mt-1 block w-full"
-                                        v-model="form.discount"
-                                        required
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.discount"
-                                    />
-                                </div>
-                            </div>
-
-                            <div
-                                class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
-                            >
-                                <div>
-                                    <InputLabel
-                                        for="booking_date"
-                                        value=" Booking Date"
+                                        for="wo_date"
+                                        value="W.O. Date"
                                         class="mb-1"
                                     />
 
                                     <VueDatePicker
-                                        v-model="form.booking_date"
+                                        v-model="form.wo_date"
                                         :teleport="true"
                                     ></VueDatePicker>
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.booking_date"
+                                        :message="form.errors.wo_date"
                                     />
                                 </div>
 
                                 <div>
                                     <InputLabel
-                                        for="vehicle_name"
-                                        value="Vehicle"
+                                        for="wo_return_date"
+                                        value="Return Date"
                                         class="mb-1"
                                     />
 
-                                    <Multiselect
-                                        v-model="form.vehicle_name"
-                                        :options="vehicles"
-                                    />
+                                    <VueDatePicker
+                                        v-model="form.wo_return_date"
+                                        :teleport="true"
+                                    ></VueDatePicker>
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.vehicle_name"
+                                        :message="form.errors.wo_return_date"
                                     />
                                 </div>
 
                                 <div>
                                     <InputLabel
-                                        for="booking_plan"
-                                        value="Plan"
+                                        for="wo_completed_date"
+                                        value="Completed Date"
                                         class="mb-1"
                                     />
 
-                                    <Multiselect
-                                        v-model="form.booking_plan"
-                                        :options="booking_plans"
-                                    />
+                                    <VueDatePicker
+                                        v-model="form.wo_completed_date"
+                                        :teleport="true"
+                                    ></VueDatePicker>
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.booking_plan"
+                                        :message="form.errors.wo_completed_date"
                                     />
                                 </div>
 
                                 <div>
                                     <InputLabel
-                                        for="payment_type"
-                                        value="Payment Type"
-                                        class="mb-1"
+                                        for="wo_customer_name"
+                                        value="Customer Name"
                                     />
 
-                                    <Multiselect
-                                        v-model="form.payment_type"
-                                        :options="payment_types"
+                                    <TextInput
+                                        id="wo_customer_name"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_customer_name"
+                                        autofocus
                                     />
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.payment_type"
+                                        :message="form.errors.wo_customer_name"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_bike_brand"
+                                        value="Bike Brand"
+                                    />
+
+                                    <TextInput
+                                        id="wo_bike_brand"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_bike_brand"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_bike_brand"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_bike_model"
+                                        value="Bike Model"
+                                    />
+
+                                    <TextInput
+                                        id="wo_bike_model"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_bike_model"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_bike_model"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_title"
+                                        value="Job Title"
+                                    />
+
+                                    <TextInput
+                                        id="wo_title"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_title"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_title"
                                     />
                                 </div>
                             </div>
 
+                            <h3 class="text-2xl font-bold text-center">
+                                Work Order - Billing Address
+                            </h3>
+                            <hr
+                                class="w-48 h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
+                            />
+
                             <div
-                                class="grid gap-4 lg:grid-cols-1 md:grid-cols-2 grid-rows-1"
+                                class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
                             >
                                 <div>
                                     <InputLabel
-                                        for="additional_msg"
-                                        value="Additional Message"
+                                        for="wo_addr_customer_name"
+                                        value="Customer Name"
                                     />
 
-                                    <textarea
-                                        class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                        v-model="form.additional_msg"
-                                        rows="7"
-                                    ></textarea>
+                                    <TextInput
+                                        id="wo_addr_customer_name"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_customer_name"
+                                        autofocus
+                                    />
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.additional_msg"
+                                        :message="
+                                            form.errors.wo_addr_customer_name
+                                        "
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_addr_str_address"
+                                        value="Street Address"
+                                    />
+
+                                    <TextInput
+                                        id="wo_addr_str_address"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_str_address"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="
+                                            form.errors.wo_addr_str_address
+                                        "
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="city" value="City" />
+
+                                    <TextInput
+                                        id="wo_addr_city"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_city"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_addr_city"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="state" value="State" />
+
+                                    <TextInput
+                                        id="wo_addr_state"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_state"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_addr_state"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="zipcode" value="Zipcode" />
+
+                                    <TextInput
+                                        id="wo_addr_zipcode"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_zipcode"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_addr_zipcode"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="phone" value="Phone" />
+
+                                    <TextInput
+                                        id="phone"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_phone"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_addr_phone"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="email" value="Email" />
+
+                                    <TextInput
+                                        id="email"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_addr_email"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_addr_email"
+                                    />
+                                </div>
+                            </div>
+
+                            <h4 class="text-2xl font-bold text-center">
+                                Work Order - Items
+                            </h4>
+                            <hr
+                                class="w-48 h-1 mx-auto bg-gray-100 border-0 rounded dark:bg-gray-700"
+                            />
+
+                            <div
+                                class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
+                            >
+                                <div>
+                                    <InputLabel
+                                        for="wo_item_category_id"
+                                        value="Item Category"
+                                        class="mb-1"
+                                    />
+
+                                    <Multiselect
+                                        v-model="form.wo_item_category_id"
+                                        :options="wo_item_categories"
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="
+                                            form.errors.wo_item_category_id
+                                        "
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="item_name"
+                                        value="Item Name"
+                                    />
+
+                                    <TextInput
+                                        id="wo_item_name"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_item_name"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_item_name"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_item_hours"
+                                        value="Hours"
+                                    />
+
+                                    <TextInput
+                                        id="wo_item_hours"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_item_hours"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_item_hours"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_item_rate"
+                                        value="Rate"
+                                    />
+
+                                    <TextInput
+                                        id="wo_item_rate"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_item_rate"
+                                        autofocus
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_item_rate"
                                     />
                                 </div>
                             </div>
@@ -484,7 +452,7 @@ const submit = () => {
                                 </PrimaryButton>
 
                                 <Link
-                                    :href="route('booking.index')"
+                                    :href="route('work-order.index')"
                                     class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
                                 >
                                     Cancel

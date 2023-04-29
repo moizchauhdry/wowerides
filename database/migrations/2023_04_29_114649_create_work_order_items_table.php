@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('work_order_items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('wo_category_id')->unsigned();
-            $table->string('item_name', 100)->nullable()->default('text');
-            $table->string('hours', 100)->nullable()->default('text');
-            $table->string('rate', 100)->nullable()->default('text');
-            $table->string('line_total', 100)->nullable()->default('text');
+            $table->bigInteger('wo_id')->unsigned();
+            $table->bigInteger('wo_item_category_id')->unsigned();
+            $table->string('wo_item_name', 100)->nullable()->default('text');
+            $table->string('wo_item_hours', 100)->nullable()->default('text');
+            $table->string('wo_item_rate', 100)->nullable()->default('text');
+            $table->string('wo_item_line_total', 100)->nullable()->default('text');
             $table->timestamps();
         });
     }
