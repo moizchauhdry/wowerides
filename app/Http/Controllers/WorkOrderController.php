@@ -73,10 +73,10 @@ class WorkOrderController extends Controller
             'wo_addr_phone' => 'required',
             'wo_addr_email' => 'required',
 
-            'wo_item_category_id' => 'required',
-            'wo_item_name' => 'required',
-            'wo_item_hours' => 'required',
-            'wo_item_rate' => 'required',
+            'wo_items.*.wo_item_category_id' => 'required',
+            'wo_items.*.wo_item_name' => 'required',
+            'wo_items.*.wo_item_hours' => 'required',
+            'wo_items.*.wo_item_rate' => 'required',
         ]);
 
         try {
@@ -104,13 +104,16 @@ class WorkOrderController extends Controller
                 'wo_addr_email' => $request->wo_addr_email,
             ]);
 
-            WorkOrderItem::updateOrCreate(['wo_id' => $request->wo_id], [
-                'wo_id' => $work_order->id,
-                'wo_item_category_id' => $request->wo_item_category_id,
-                'wo_item_name' => $request->wo_item_name,
-                'wo_item_hours' => $request->wo_item_hours,
-                'wo_item_rate' => $request->wo_item_rate,
-            ]);
+            WorkOrderItem::where('wo_id', $work_order->id)->delete();
+            foreach ($request->wo_items as $key => $item) {
+                WorkOrderItem::create([
+                    'wo_id' => $work_order->id,
+                    'wo_item_category_id' => $item['wo_item_category_id'],
+                    'wo_item_name' => $item['wo_item_name'],
+                    'wo_item_hours' => $item['wo_item_hours'],
+                    'wo_item_rate' => $item['wo_item_rate'],
+                ]);
+            }
 
             DB::commit();
         } catch (\Throwable $th) {
@@ -118,13 +121,13 @@ class WorkOrderController extends Controller
             //throw $th;
         }
 
-        // try {
-        //     if (!$request->work_order_id) {
-        //         Mail::to($work_order->user_email)->send(new WorkOrderMail($work_order));
-        //     }
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        try {
+            if (!$request->work_order_id) {
+                Mail::to($work_order->user_email)->send(new WorkOrderMail($work_order));
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
 
         return Redirect::route('work-order.index');
     }

@@ -38,7 +38,9 @@ defineProps({
                                 class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400"
                             >
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">W.O.#</th>
+                                    <th scope="col" class="px-6 py-3">
+                                        W.O. #
+                                    </th>
                                     <th scope="col" class="px-6 py-3">
                                         W.O Date
                                     </th>

@@ -5,10 +5,13 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
+import { onMounted } from "vue";
 
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Multiselect from "@vueform/multiselect";
+import SuccessButton from "@/Components/SuccessButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
 
 const props = defineProps({
     edit_mode: Boolean,
@@ -16,6 +19,7 @@ const props = defineProps({
 });
 
 const work_order = usePage().props.work_order;
+const edit_mode = usePage().props.edit_mode;
 
 var wo_item_categories = [
     { value: 1, label: "Service and Labor" },
@@ -40,23 +44,44 @@ const form = useForm({
     wo_addr_phone: work_order?.billing_address?.wo_addr_phone,
     wo_addr_email: work_order?.billing_address?.wo_addr_email,
 
-    wo_item_category_id: work_order?.items?.wo_item_category_id,
-    wo_item_name: work_order?.items?.wo_item_name,
-    wo_item_hours: work_order?.items?.wo_item_hours,
-    wo_item_rate: work_order?.items?.wo_item_rate,
+    wo_items: work_order?.items,
 });
-
-console.log(work_order);
 
 const submit = () => {
     form.post(route("work-order.update"));
 };
+
+const addItem = () => {
+    form.wo_items.push({
+        wo_item_category_id: "",
+        wo_item_name: "",
+        wo_item_hours: "",
+        wo_item_rate: "",
+    });
+};
+
+const removeItem = (index) => {
+    form.wo_items.splice(index, 1);
+};
+
+onMounted(() => {
+    if (!edit_mode) {
+        form.wo_items = [
+            {
+                wo_item_category_id: "",
+                wo_item_name: "",
+                wo_item_hours: "",
+                wo_item_rate: "",
+            },
+        ];
+    }
+});
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
 
 <template>
-    <Head :title="edit_mode ? 'Edit work_order' : 'Create work_order'" />
+    <Head :title="edit_mode ? 'Edit Work Order' : 'Create Work Order'" />
 
     <AuthenticatedLayout>
         <template #header>
@@ -145,7 +170,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_customer_name"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -165,7 +189,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_bike_brand"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -185,7 +208,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_bike_model"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -205,7 +227,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_title"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -236,7 +257,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_customer_name"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -258,7 +278,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_str_address"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -277,7 +296,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_city"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -294,7 +312,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_state"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -311,7 +328,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_zipcode"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -328,7 +344,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_phone"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -345,7 +360,6 @@ const submit = () => {
                                         type="text"
                                         class="mt-1 block w-full"
                                         v-model="form.wo_addr_email"
-                                        autofocus
                                     />
 
                                     <InputError
@@ -363,88 +377,99 @@ const submit = () => {
                             />
 
                             <div
-                                class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
+                                class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
                             >
                                 <div>
-                                    <InputLabel
-                                        for="wo_item_category_id"
-                                        value="Item Category"
-                                        class="mb-1"
-                                    />
-
-                                    <Multiselect
-                                        v-model="form.wo_item_category_id"
-                                        :options="wo_item_categories"
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="
-                                            form.errors.wo_item_category_id
-                                        "
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="item_name"
-                                        value="Item Name"
-                                    />
-
-                                    <TextInput
-                                        id="wo_item_name"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.wo_item_name"
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.wo_item_name"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="wo_item_hours"
-                                        value="Hours"
-                                    />
-
-                                    <TextInput
-                                        id="wo_item_hours"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.wo_item_hours"
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.wo_item_hours"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="wo_item_rate"
-                                        value="Rate"
-                                    />
-
-                                    <TextInput
-                                        id="wo_item_rate"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.wo_item_rate"
-                                        autofocus
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.wo_item_rate"
-                                    />
+                                    <SuccessButton
+                                        :disabled="form.processing"
+                                        @click="addItem()"
+                                        type="button"
+                                        class="float-right"
+                                    >
+                                        Add Item
+                                    </SuccessButton>
                                 </div>
                             </div>
+
+                            <template
+                                v-for="(item, index) in form.wo_items"
+                                :key="item.id"
+                            >
+                                <div
+                                    class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
+                                >
+                                    <div>
+                                        <InputLabel
+                                            for="wo_item_category_id"
+                                            value="Item Category"
+                                            class="mb-1"
+                                        />
+
+                                        <Multiselect
+                                            v-model="item.wo_item_category_id"
+                                            :options="wo_item_categories"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel
+                                            for="item_name"
+                                            value="Item Name"
+                                        />
+
+                                        <TextInput
+                                            id="wo_item_name"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="item.wo_item_name"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel
+                                            for="wo_item_hours"
+                                            value="Hours"
+                                        />
+
+                                        <TextInput
+                                            id="wo_item_hours"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="item.wo_item_hours"
+                                        />
+                                    </div>
+
+                                    <div>
+                                        <InputLabel
+                                            for="wo_item_rate"
+                                            value="Rate"
+                                        />
+
+                                        <TextInput
+                                            id="wo_item_rate"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="item.wo_item_rate"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
+                                    v-if="index != 0"
+                                >
+                                    <div>
+                                        <DangerButton
+                                            :disabled="form.processing"
+                                            type="button"
+                                            class="float-right text-xs"
+                                            @click="removeItem(index)"
+                                        >
+                                            Remove
+                                        </DangerButton>
+                                    </div>
+                                </div>
+                            </template>
 
                             <div class="flex items-center gap-2">
                                 <PrimaryButton :disabled="form.processing">

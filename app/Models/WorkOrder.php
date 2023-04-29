@@ -17,6 +17,6 @@ class WorkOrder extends Model
 
     public function items()
     {
-        return $this->hasOne(WorkOrderItem::class, 'wo_id', 'id');
+        return $this->hasMany(WorkOrderItem::class, 'wo_id', 'id');
     }
 }
