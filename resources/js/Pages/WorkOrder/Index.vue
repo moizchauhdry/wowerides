@@ -3,7 +3,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
 
 defineProps({
-    bookings: Object,
+    work_orders: Object,
 });
 </script>
 
@@ -38,65 +38,69 @@ defineProps({
                                 class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400"
                             >
                                 <tr>
+                                    <th scope="col" class="px-6 py-3">W.O.#</th>
+                                    <th scope="col" class="px-6 py-3">
+                                        W.O Date
+                                    </th>
                                     <th scope="col" class="px-6 py-3">
                                         Customer name
                                     </th>
-                                    <!-- <th scope="col" class="px-6 py-3">
-                                        Pickup
+                                    <th scope="col" class="px-6 py-3">
+                                        Bike Brand
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Destination
+                                        Bike Modal
                                     </th>
-                                    <th scope="col" class="px-6 py-3">Price</th>
-                                    <th scope="col" class="px-6 py-3">Date</th>
-                                    <th scope="col" class="px-6 py-3"></th> -->
+                                    <th scope="col" class="px-6 py-3">Total</th>
+                                    <th scope="col" class="px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr
                                     class="bg-white border-b light:bg-gray-800 light:border-gray-700"
-                                    v-for="work_order in work_orders"
+                                    v-for="work_order in work_orders.data"
                                 >
-                                    <!-- <th
-                                        scope="row"
-                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap light:text-white"
-                                    >
-                                        {{ booking.user_name }} <br />
-                                        {{ booking.user_email }} <br />
-                                        {{ booking.user_phone }} <br />
-                                    </th>
                                     <td class="px-6 py-4">
-                                        {{ booking.pickup }}
+                                        {{ work_order.id }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ booking.destination }}
+                                        {{ work_order.wo_date }}
+                                    </td>
+                                    <td scope="row" class="px-6 py-4">
+                                        <b>{{ work_order.customer_name }}</b>
                                     </td>
                                     <td class="px-6 py-4">
-                                        ${{ booking.price }}
+                                        {{ work_order.bike_brand }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ booking.booking_date }}
+                                        {{ work_order.bike_model }}
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        {{ work_order.total_amount }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <Link
                                             class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-yellow-900"
                                             :href="
                                                 route(
-                                                    'booking.edit',
-                                                    booking.id
+                                                    'work-order.edit',
+                                                    work_order.id
                                                 )
                                             "
                                             >Edit</Link
                                         >
                                         <a
                                             :href="
-                                                route('booking.pdf', booking.id)
+                                                route(
+                                                    'work-order.pdf',
+                                                    work_order.id
+                                                )
                                             "
                                             class="focus:outline-none text-white bg-purple-500 hover:bg-purple-600 focus:ring-2 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-purple-900"
                                             target="_blank"
                                             >Invoice</a
                                         >
-                                    </td> -->
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

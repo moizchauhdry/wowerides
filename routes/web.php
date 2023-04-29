@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/work-order/create', [WorkOrderController::class, 'create'])->name('work-order.create');
     Route::get('/work-order/edit/{id}', [WorkOrderController::class, 'edit'])->name('work-order.edit');
     Route::post('/work-order/update', [WorkOrderController::class, 'update'])->name('work-order.update');
-    // Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
+    Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
 });
 
 require __DIR__ . '/auth.php';

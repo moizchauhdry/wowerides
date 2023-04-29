@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('bike_model', 100);
             $table->date('wo_date');
             $table->date('return_date');
+            $table->float('total_amount');
             $table->timestamps();
         });
     }

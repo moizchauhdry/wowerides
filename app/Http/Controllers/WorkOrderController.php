@@ -16,6 +16,12 @@ class WorkOrderController extends Controller
             ->withQueryString()
             ->through(fn ($work_order) => [
                 'id' => $work_order->id,
+                'customer_name' => $work_order->customer_name,
+                'bike_brand' => $work_order->bike_brand,
+                'bike_model' => $work_order->bike_model,
+                'wo_date' => $work_order->wo_date,
+                'return_date' => $work_order->return_date,
+                'total_amount' => $work_order->total_amount,
             ]);
 
         return Inertia::render('WorkOrder/Index', [
