@@ -396,22 +396,23 @@ onMounted(() => {
                                 :key="item.id"
                             >
                                 <div
-                                    class="grid gap-4 lg:grid-cols-4 md:grid-cols-2 grid-rows-1"
+                                    class="grid gap-1 lg:grid-cols-7 md:grid-cols-7 grid-rows-1"
                                 >
-                                    <div>
+                                    <div class="col-span-2">
                                         <InputLabel
-                                            for="wo_item_category_id"
-                                            value="Item Category"
-                                            class="mb-1"
+                                            :value="
+                                                'Item Category #' + (index + 1)
+                                            "
                                         />
 
                                         <Multiselect
+                                            style="margin-top: 3px !important"
                                             v-model="item.wo_item_category_id"
                                             :options="wo_item_categories"
                                         />
                                     </div>
 
-                                    <div>
+                                    <div class="col-span-3">
                                         <InputLabel
                                             for="item_name"
                                             value="Item Name"
@@ -425,7 +426,7 @@ onMounted(() => {
                                         />
                                     </div>
 
-                                    <div>
+                                    <div class="col-span-1">
                                         <InputLabel
                                             for="wo_item_hours"
                                             value="Hours"
@@ -439,7 +440,7 @@ onMounted(() => {
                                         />
                                     </div>
 
-                                    <div>
+                                    <div class="col-span-1">
                                         <InputLabel
                                             for="wo_item_rate"
                                             value="Rate"
@@ -456,7 +457,10 @@ onMounted(() => {
 
                                 <div
                                     class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
-                                    v-if="index != 0"
+                                    v-if="
+                                        index === form.wo_items.length - 1 &&
+                                        index != 0
+                                    "
                                 >
                                     <div>
                                         <DangerButton
