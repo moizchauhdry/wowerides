@@ -26,7 +26,7 @@ class WorkOrderController extends Controller
                 'wo_bike_model' => $work_order->wo_bike_model,
                 'wo_date' => $work_order->wo_date,
                 'wo_return_date' => $work_order->wo_return_date,
-                'wo_total_amount' => $work_order->wo_total_amount,
+                'wo_grand_total' => $work_order->wo_grand_total,
             ]);
 
         return Inertia::render('WorkOrder/Index', [
@@ -71,12 +71,19 @@ class WorkOrderController extends Controller
             'wo_addr_state' => 'required',
             'wo_addr_zipcode' => 'required',
             'wo_addr_phone' => 'required',
-            'wo_addr_email' => 'required',
+            'wo_addr_email' => 'required|email',
 
             'wo_items.*.wo_item_category_id' => 'required',
             'wo_items.*.wo_item_name' => 'required',
-            'wo_items.*.wo_item_hours' => 'required',
-            'wo_items.*.wo_item_rate' => 'required',
+            'wo_items.*.wo_item_hours' => 'required|numeric|gte:1',
+            'wo_items.*.wo_item_rate' => 'required|numeric|gte:0',
+            'wo_items.*.wo_item_line_total' => 'required|numeric|gte:0',
+
+            'wo_subtotal' => 'required|numeric',
+            'wo_discount' => 'required|numeric',
+            'wo_tax_rate' => 'required|numeric',
+            'wo_tax_total' => 'required|numeric',
+            'wo_grand_total' => 'required|numeric',
         ]);
 
         try {
@@ -91,6 +98,12 @@ class WorkOrderController extends Controller
                 'wo_bike_brand' => $request->wo_bike_brand,
                 'wo_bike_model' => $request->wo_bike_model,
                 'wo_completed_date' => Carbon::parse($request->wo_completed_date)->format('Y-m-d'),
+
+                'wo_subtotal' => $request->wo_subtotal,
+                'wo_discount' => $request->wo_discount,
+                'wo_tax_rate' => $request->wo_tax_rate,
+                'wo_tax_total' => $request->wo_tax_total,
+                'wo_grand_total' => $request->wo_grand_total,
             ]);
 
             WorkOrderAddress::updateOrCreate(['wo_id' => $request->wo_id], [
@@ -112,6 +125,7 @@ class WorkOrderController extends Controller
                     'wo_item_name' => $item['wo_item_name'],
                     'wo_item_hours' => $item['wo_item_hours'],
                     'wo_item_rate' => $item['wo_item_rate'],
+                    'wo_item_line_total' => $item['wo_item_line_total'],
                 ]);
             }
 
@@ -121,13 +135,13 @@ class WorkOrderController extends Controller
             //throw $th;
         }
 
-        try {
-            if (!$request->work_order_id) {
-                Mail::to($work_order->user_email)->send(new WorkOrderMail($work_order));
-            }
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
+        // try {
+        //     if (!$request->work_order_id) {
+        //         Mail::to($work_order->user_email)->send(new WorkOrderMail($work_order));
+        //     }
+        // } catch (\Throwable $th) {
+        //     //throw $th;
+        // }
 
         return Redirect::route('work-order.index');
     }

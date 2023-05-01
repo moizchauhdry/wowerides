@@ -78,7 +78,7 @@ defineProps({
                                         {{ work_order.wo_bike_model }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.wo_total_amount }}
+                                        ${{ work_order.wo_grand_total }}
                                     </td>
                                     <td class="px-6 py-4">
                                         <Link

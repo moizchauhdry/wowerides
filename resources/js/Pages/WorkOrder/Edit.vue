@@ -45,6 +45,12 @@ const form = useForm({
     wo_addr_email: work_order?.billing_address?.wo_addr_email,
 
     wo_items: work_order?.items,
+
+    wo_subtotal: 0,
+    wo_discount: 0,
+    wo_tax_rate: 5,
+    wo_tax_total: 0,
+    wo_grand_total: 0,
 });
 
 const submit = () => {
@@ -62,6 +68,26 @@ const addItem = () => {
 
 const removeItem = (index) => {
     form.wo_items.splice(index, 1);
+    getGrandTotal();
+};
+
+const getGrandTotal = () => {
+    form.wo_subtotal = 0;
+    form.wo_items.forEach((item) => {
+        form.wo_subtotal += parseFloat(item.wo_item_line_total);
+    });
+    form.wo_tax_total =
+        (form.wo_subtotal - form.wo_discount) * (form.wo_tax_rate / 100);
+    form.wo_grand_total =
+        form.wo_subtotal - form.wo_discount + form.wo_tax_total;
+};
+
+const getLineTotal = (index) => {
+    const item = form.wo_items[index];
+    const lineTotal = item.wo_item_hours * item.wo_item_rate;
+    item.wo_item_line_total = lineTotal.toFixed(2);
+
+    getGrandTotal();
 };
 
 onMounted(() => {
@@ -75,10 +101,32 @@ onMounted(() => {
             },
         ];
     }
+
+    if (edit_mode) {
+        getGrandTotal();
+    }
 });
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
+
+<style>
+input[type="number"]:disabled {
+    opacity: 0.5;
+    background-color: #eee;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    display: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input:disabled {
+    cursor: not-allowed;
+}
+</style>
 
 <template>
     <Head :title="edit_mode ? 'Edit Work Order' : 'Create Work Order'" />
@@ -396,7 +444,7 @@ onMounted(() => {
                                 :key="item.id"
                             >
                                 <div
-                                    class="grid gap-1 lg:grid-cols-7 md:grid-cols-7 grid-rows-1"
+                                    class="grid gap-1 lg:grid-cols-8 md:grid-cols-8 grid-rows-1"
                                 >
                                     <div class="col-span-2">
                                         <InputLabel
@@ -434,9 +482,10 @@ onMounted(() => {
 
                                         <TextInput
                                             id="wo_item_hours"
-                                            type="text"
+                                            type="number"
                                             class="mt-1 block w-full"
                                             v-model="item.wo_item_hours"
+                                            @keyup="getLineTotal(index)"
                                         />
                                     </div>
 
@@ -448,9 +497,25 @@ onMounted(() => {
 
                                         <TextInput
                                             id="wo_item_rate"
-                                            type="text"
+                                            type="number"
                                             class="mt-1 block w-full"
                                             v-model="item.wo_item_rate"
+                                            @keyup="getLineTotal(index)"
+                                        />
+                                    </div>
+
+                                    <div class="col-span-1">
+                                        <InputLabel
+                                            for="line_total"
+                                            value="Line Total"
+                                        />
+
+                                        <TextInput
+                                            disabled
+                                            id="line_total"
+                                            type="number"
+                                            class="mt-1 block w-full"
+                                            v-model="item.wo_item_line_total"
                                         />
                                     </div>
                                 </div>
@@ -475,16 +540,73 @@ onMounted(() => {
                                 </div>
                             </template>
 
+                            <div
+                                class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
+                            >
+                                <div class="justify-self-end">
+                                    <div
+                                        class="border p-4"
+                                        style="width: 250px"
+                                    >
+                                        <div class="flex justify-between mb-4">
+                                            <div class="font-bold">
+                                                SUBTOTAL
+                                            </div>
+                                            <div class="font-bold">
+                                                ${{
+                                                    form.wo_subtotal.toFixed(2)
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between mb-4">
+                                            <div class="font-bold">
+                                                DISCOUNT
+                                            </div>
+                                            <div class="font-bold">
+                                                -${{
+                                                    form.wo_discount.toFixed(2)
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="flex justify-between mb-4">
+                                            <div>TAX RATE</div>
+                                            <div>{{ form.wo_tax_rate }}%</div>
+                                        </div>
+                                        <div class="flex justify-between mb-4">
+                                            <div>TAX TOTAL</div>
+                                            <div>
+                                                ${{
+                                                    form.wo_tax_total.toFixed(2)
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex justify-between mb-4 bg-blue-100 p-2"
+                                        >
+                                            <div class="font-bold">
+                                                GRAND TOTAL
+                                            </div>
+                                            <div class="font-bold">
+                                                ${{
+                                                    form.wo_grand_total.toFixed(
+                                                        2
+                                                    )
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="flex items-center gap-2">
                                 <PrimaryButton :disabled="form.processing">
                                     {{ edit_mode ? "Update" : "Save" }}
                                 </PrimaryButton>
 
-                                <Link
-                                    :href="route('work-order.index')"
-                                    class="inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                                >
-                                    Cancel
+                                <Link :href="route('work-order.index')">
+                                    <DangerButton :disabled="form.processing">
+                                        Cancel
+                                    </DangerButton>
                                 </Link>
                             </div>
                         </form>

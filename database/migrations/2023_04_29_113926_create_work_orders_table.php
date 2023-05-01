@@ -20,7 +20,11 @@ return new class extends Migration
             $table->date('wo_date');
             $table->date('wo_return_date');
             $table->date('wo_completed_date');
-            $table->float('wo_total_amount')->default(0);
+            $table->float('wo_subtotal')->default(0);
+            $table->float('wo_discount')->default(0);
+            $table->float('wo_tax_rate')->default(0);
+            $table->float('wo_tax_total')->default(0);
+            $table->float('wo_grand_total')->default(0);
             $table->timestamps();
         });
     }

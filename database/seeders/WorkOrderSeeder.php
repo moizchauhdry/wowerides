@@ -21,7 +21,7 @@ class WorkOrderSeeder extends Seeder
             'wo_date' => '2023-04-29',
             'wo_return_date' => '2023-05-01',
             'wo_completed_date' => '2023-05-01',
-            'wo_total_amount' => 150.25,
+            'wo_grand_total' => 150.25,
         ]);
     }
 }
