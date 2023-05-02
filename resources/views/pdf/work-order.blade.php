@@ -36,7 +36,7 @@
 
 
         .top-header {
-            display: flex;
+            display: flex !important;
             justify-content: space-between;
         }
 
@@ -64,7 +64,7 @@
         }
 
         header li {
-            display: flex;
+            display: flex !important;
             justify-content: end;
             align-items: end;
             margin: 10px 0;
@@ -75,7 +75,7 @@
         }
 
         .bottom-header {
-            display: flex;
+            display: flex !important;
             justify-content: space-between;
             align-items: end;
         }
@@ -93,7 +93,7 @@
         }
 
         table li {
-            display: flex;
+            display: flex !important;
             justify-content: end;
             align-items: end;
             margin: 0;
@@ -157,7 +157,7 @@
         }
 
         .bottom-table-list li {
-            display: flex;
+            display: flex !important;
             justify-content: end;
         }
 
@@ -167,7 +167,7 @@
             height: 30px;
             padding: 2px 5px;
             margin: 0 5px;
-            display: flex;
+            display: flex !important;
             justify-content: space-between;
         }
 
@@ -185,7 +185,7 @@
 
         .footer-sign>div,
         .footer-date>div {
-            display: flex;
+            display: flex !important;
             width: 100%;
             align-items: end;
             justify-content: end;
@@ -209,7 +209,7 @@
         }
 
         .footer-content {
-            display: flex;
+            display: flex !important;
             justify-content: space-between;
         }
 
