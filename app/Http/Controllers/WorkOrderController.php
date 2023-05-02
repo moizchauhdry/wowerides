@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use PDF;
 
 class WorkOrderController extends Controller
 {
@@ -146,16 +147,16 @@ class WorkOrderController extends Controller
         return Redirect::route('work-order.index');
     }
 
-    // public function pdf($id)
-    // {
-    //     $work_order = WorkOrder::find($id);
+    public function pdf($id)
+    {
+        $wo = WorkOrder::find($id);
 
-    //     view()->share([
-    //         'work_order' => $work_order,
-    //     ]);
+        view()->share([
+            'wo' => $wo,
+        ]);
 
-    //     $pdf = PDF::loadView('pdf.work_order');
-    //     $pdf->setPaper('A4', 'portrait');
-    //     return $pdf->stream('work_order.pdf');
-    // }
+        $pdf = PDF::loadView('pdf.work-order');
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('work-order.pdf');
+    }
 }

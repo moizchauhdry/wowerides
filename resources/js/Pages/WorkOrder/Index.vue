@@ -91,7 +91,7 @@ defineProps({
                                             "
                                             >Edit</Link
                                         >
-                                        <!-- <a
+                                        <a
                                             :href="
                                                 route(
                                                     'work-order.pdf',
@@ -101,7 +101,7 @@ defineProps({
                                             class="focus:outline-none text-white bg-purple-500 hover:bg-purple-600 focus:ring-2 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-purple-900"
                                             target="_blank"
                                             >Invoice</a
-                                        > -->
+                                        >
                                     </td>
                                 </tr>
                             </tbody>
