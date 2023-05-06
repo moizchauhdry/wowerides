@@ -159,4 +159,12 @@ class WorkOrderController extends Controller
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('work-order.pdf');
     }
+
+
+    public function customerInfoPdf()
+    {
+        $pdf = PDF::loadView('pdf.customer-info');
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('customer-info.pdf');
+    }
 }

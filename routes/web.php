@@ -42,3 +42,5 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__ . '/auth.php';
+
+Route::get('/customer-info-pdf', [WorkOrderController::class, 'customerInfoPdf'])->name('customer-info.pdf');
