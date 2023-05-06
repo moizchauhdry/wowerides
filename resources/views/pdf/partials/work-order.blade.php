@@ -19,14 +19,14 @@
                         <div class="data-row">{{$wo->wo_return_date}}</div>
                     </li>
                 </ul>
-            </div> 
+            </div>
         </div>
         <div class="bottom-header">
             <div class='bottom-header-contact'>
                 <p>260300 Writing Creek Cres Unit # E-18, Balzac,</p>
                 <p>[Calgary, T4A 0G3]</p>
-                <p>Phone: 403.452.9892</p>
-                <p>http://www.wowerides.ca/</p>
+                <p><b>Phone:</b> 403.452.9892</p>
+                <p><b>Website:</b> wowerides.ca</p>
             </div>
             <ul class="bottom-header-list">
                 <li>
@@ -54,7 +54,7 @@
                 <th>BILL TO</th>
             </tr>
             <tr>
-                <td>Change tire and tube</td>
+                <td>{{$wo->wo_title}}</td>
                 <td>
                     <li>
                         <p>Customer Name:</p>
@@ -112,62 +112,56 @@
                 <th>Rate ($/hr)</th>
                 <th>Line Total</th>
             </tr>
+            @foreach ($wo->items->where('wo_item_category_id',1) as $item)
             <tr>
-                <td>Lahour charges</td>
-                <td>3</td>
-                <td>50.00</td>
-                <td>150.00</td>
+                <td>{{$item->wo_item_name}}</td>
+                <td>{{$item->wo_item_hours}}</td>
+                <td>{{$item->wo_item_rate}}</td>
+                <td>{{$item->wo_item_line_total}}</td>
             </tr>
-            <tr>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>3</td>
-                <td>3</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>4</td>
-                <td>4</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-            </tr>
+            @endforeach
         </table>
 
         <ul class="bottom-table-list">
             <li>
                 <p>SUBTOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,1)['subtotal']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>DISCOUNT</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
-            </li>
-            <li>
-                <p>TOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,1)['discount']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>TAX RATE</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,1)['tax_rate']}}%
+                    </span>
+                </div>
             </li>
             <li>
-                <p>TAX A</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <p>TAX AMOUNT</p>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,1)['tax_amount']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>TOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,1)['total']}}
+                    </span>
+                </div>
             </li>
         </ul>
 
@@ -179,62 +173,66 @@
                 <th>Unit Price</th>
                 <th>Line Total</th>
             </tr>
+            @foreach ($wo->items->where('wo_item_category_id',2) as $item)
             <tr>
-                <td>Tire 10/2.5</td>
-                <td>2</td>
-                <td>20.00</td>
-                <td>40.00</td>
+                <td>{{$item->wo_item_name}}</td>
+                <td>{{$item->wo_item_hours}}</td>
+                <td>{{$item->wo_item_rate}}</td>
+                <td>
+                    {{number_format((float)$wo->wo_item_line_total, 2, '.', '')}}
+                </td>
             </tr>
-            <tr>
-                <td>Tube 10/2.5</td>
-                <td>2</td>
-                <td>15.00</td>
-                <td>30.00</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>3</td>
-                <td>3</td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>4</td>
-                <td>4</td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-                <td>5</td>
-            </tr>
+            @endforeach
         </table>
 
         <ul class="bottom-table-list">
             <li>
                 <p>SUBTOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,2)['subtotal']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>DISCOUNT</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
-            </li>
-            <li>
-                <p>TOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,2)['discount']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>TAX RATE</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,2)['tax_rate']}}%
+                    </span>
+                </div>
             </li>
             <li>
-                <p>TAX A</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <p>TAX AMOUNT</p>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,2)['tax_amount']}}
+                    </span>
+                </div>
             </li>
             <li>
                 <p>TOTAL</p>
-                <div class="data-row"><span>$</span><span>150.00</span></div>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{calculation($wo->id,2)['total']}}
+                    </span>
+                </div>
+            </li>
+            <li>
+                <p>GRAND TOTAL</p>
+                <div class="data-row"><span>$</span>
+                    <span>
+                        {{format_number($wo->wo_grand_total)}}
+                    </span>
+                </div>
             </li>
         </ul>
 
@@ -244,18 +242,15 @@
         <div class="footer-content">
             <div class="footer-sign">
                 <div>
-                    <p>Customer Signature:</p>
-                    <hr />
+                    <p>Customer Signature: __________________________</p>
                 </div>
             </div>
             <div class="footer-date">
                 <div>
-                    <p>Completed Date:</p>
-                    <hr />
+                    <p>Completed Date: _____________________________</p>
                 </div>
                 <div>
-                    <p>Date:</p>
-                    <hr />
+                    <p>Date: _____________________________</p>
                 </div>
             </div>
         </div>

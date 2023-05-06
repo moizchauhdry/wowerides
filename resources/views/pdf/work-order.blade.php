@@ -16,8 +16,13 @@
             box-sizing: border-box;
         }
 
+        table {
+            border-collapse: collapse;
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
+            font-size: 12px;
         }
 
         ul {
@@ -28,97 +33,102 @@
             display: inline-block;
             width: 100%;
             margin: 0;
-            margin-bottom: 80px;
+            margin-bottom: 110px;
         }
 
         .top-header .wow-logo {
-            height: 15%;
-            width: 70%;
-            float:left;
+            height: 8%;
+            width: 40%;
+            float: left;
             margin-left: -30px;
         }
-        
-        .top-header .top-header-list{
+
+        .top-header .top-header-list {
             width: 40%;
-            float:left;
+            float: left;
             padding: 0;
-            margin-left: 30px;
+            margin-left: 220px;
+            margin-top: -30px
         }
-        .top-header-list h1{
-            margin: 0;
+
+        .top-header-list h1 {
+            margin-left: 70px;
             padding: 0;
-            /* font-size:20px; */
+            font-size: 18px;
             width: 100%;
         }
 
-        .top-header-list ul{
+        .top-header-list ul {
             margin-left: 70px;
             width: 100%;
         }
 
-        .top-header-list li{
+        .top-header-list li {
             margin: 0 10px;
             width: 300px;
             display: inline-block;
         }
-        .top-header-list li p{
+
+        .top-header-list li p {
             text-align: right;
-            float:left;
+            float: left;
             margin: 0;
             width: 35%;
             margin-left: -110px;
         }
-        
+
         .top-header .data-row {
             /* float:left; */
             text-align: center;
             border: 1px solid rgb(128, 127, 127);
             background-color: whitesmoke;
             width: 100px;
-            height: 20px;
+            height: 15px;
             margin: 0;
             padding: 0;
-            
+
         }
 
-        .bottom-header{
+        .bottom-header {
             width: 100%;
-            display:inline-block;
-            margin-top: 100px;
+            display: inline-block;
+            margin-top: 20px;
         }
 
-        .bottom-header-contact{
+        .bottom-header-contact {
             /* float:left; */
             width: 50%;
             margin: 0;
             margin-left: -30px;
+            margin-top: -50px;
         }
-        
-        .bottom-header-list{
+
+        .bottom-header-list {
             /* float:left; */
             width: 70%;
             margin: 0;
-            margin-top: -20%;
+            margin-top: -12%;
             margin-left: 425px;
         }
-        
-        .bottom-header-list li{
+
+        .bottom-header-list li {
             margin: 0;
         }
-        .bottom-header-list li p{
+
+        .bottom-header-list li p {
             float: left;
             margin: 0;
-           margin-left: -130px;
+            margin-left: -130px;
         }
 
         .bottom-header .data-row {
             border: 1px solid rgb(128, 127, 127);
             background-color: whitesmoke;
             width: 250px;
-            height: 25px;
+            height: 15px;
         }
 
-        .bottom-header-contact p{
+        .bottom-header-contact p {
             margin: 0 10px;
         }
 
@@ -142,7 +152,7 @@
             width: 100%;
         }
 
-      
+
 
         table li {
             display: flex !important;
@@ -155,7 +165,7 @@
         table .data-row {
             border: 1px solid rgb(128, 127, 127);
             background-color: whitesmoke;
-            height: 30px;
+            height: 15px;
             width: 350px;
             padding: 2px 5px;
         }
@@ -164,72 +174,76 @@
             background: rgb(59, 78, 135);
             color: white;
             text-align: left;
-            height: 40px;
+            height: 15px;
             padding-left: 20px;
         }
 
-        td{
-            border:1px solid black;
+        td {
+            border: 1px solid black;
             margin: 0;
             padding: 0;
             padding-left: 5px;
         }
 
-        .first-table{
+        .first-table {
             width: 700px !important;
             margin: 0;
-            margin-top: 50px;
+            margin-top: 10px;
             margin-left: -30px;
         }
 
-        .first-table tr th:first-child{
+        .first-table tr th:first-child {
             width: 300px;
         }
-        .first-table tr th:last-child{
+
+        .first-table tr th:last-child {
             width: 400px;
         }
-        .first-table td{
-            border:0;
+
+        .first-table td {
+            border: 0;
             margin: 0;
             padding: 0;
         }
 
-        .first-table li:first-child p{
+        .first-table li:first-child p {
             margin: 0;
         }
-        
-        .first-table li p{
+
+        .first-table li p {
             float: left;
             margin-left: -100px;
             width: 150px;
             padding-left: 5px;
         }
 
-        .first-table .data-row{
-            width: 250px;
-            height: 30px;
+        .first-table .data-row {
+            width: 300px;
+            height: 15px;
             padding: 0;
             margin: 0;
             padding-left: 5px;
-            margin-left: 170px;
+            text-align: left;
+            margin-left: 120px;
         }
 
-        .first-table tr td:first-child{
+        .first-table tr td:first-child {
             padding-left: 5px;
         }
 
         .service-table,
         .parts-table {
             width: 750px;
-            margin-top: 50px;
+            margin-top: 10px;
             margin-left: -30px;
         }
+
         .service-table th,
         .service-table td,
         .parts-table th,
         .parts-table td {
             width: 80px;
-            height: 30px;
+            height: 15px;
             text-align: center;
         }
 
@@ -241,20 +255,20 @@
             text-align: center;
         }
 
-        .bottom-table-list{
+        .bottom-table-list {
             margin-left: 520px;
         }
 
         .bottom-table-list li {
             display: flex !important;
             justify-content: end;
-            display:inline-block;
+            display: inline-block;
         }
 
         .bottom-table-list .data-row {
             background-color: rgb(226, 222, 222);
             width: 150px;
-            height: 25px;
+            height: 15px;
             display: flex !important;
             justify-content: space-between;
             /* float:left; */
@@ -263,13 +277,13 @@
             padding-left: 5px;
         }
 
-        .bottom-table-list .data-row span:last-child{
+        .bottom-table-list .data-row span:last-child {
             margin-left: 80px;
         }
 
         .bottom-table-list li p {
             width: 100px;
-            float:left;
+            float: left;
             margin: 0;
             margin-left: -110px;
         }
@@ -277,10 +291,10 @@
 
         footer h5 {
             text-align: center;
-            font-size: 20px;
-            margin-top: 10rem;
-            font-style:italic;
-            font-weight:400;
+            font-size: 14px;
+            margin-top: 5rem;
+            font-style: italic;
+            font-weight: 400;
         }
 
 
@@ -300,23 +314,17 @@
         .footer-content p {
             width: 300px;
             text-align: end;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             /* float:left; */
-        }
-
-        .footer-content hr {
-            width: 300px;
-            height: 2px;
-            border:none;
-            background: #000;
         }
 
         .footer-content {
             /* width: 100%; */
             display: inline-block;
         }
-        .footer-content > div {
-            float:left;
+
+        .footer-content>div {
+            float: left;
             width: 300px;
         }
 
@@ -327,11 +335,12 @@
         .footer-date {
             width: 200px;
             margin-left: 115px;
-        } 
+        }
 
-        .footer-date div:last-child{
+        .footer-date div:last-child {
             margin: 0;
-            margin-top: 20px;
+            margin-top: 10px;
+            margin-left: 80px;
         }
     </style>
 </head>
