@@ -2,25 +2,27 @@
 
     <header>
         <div class="top-header">
-            <img class="wow-logo" src="" alt="wow-logo">
-            <ul class="top-header-list">
+            <img class="wow-logo" src="https://admin.octalsol.com/build/assets/logo-51416f02.png" alt="wow-logo" />
+            <div class="top-header-list">
                 <h1>WORK ORDER</h1>
-                <li>
-                    <p>W.O. # :</p>
-                    <div class="data-row">[{{$wo->id}}]</div>
-                </li>
-                <li>
-                    <p>W.O. Date :</p>
-                    <div class="data-row">{{$wo->wo_date}}</div>
-                </li>
-                <li>
-                    <p>Return Date :</p>
-                    <div class="data-row">{{$wo->wo_return_date}}</div>
-                </li>
-            </ul>
+                <ul>
+                    <li>
+                        <p>W.O. # :</p>
+                        <div class="data-row">[{{$wo->id}}]</div>
+                    </li>
+                    <li>
+                        <p>W.O. Date :</p>
+                        <div class="data-row">{{$wo->wo_date}}</div>
+                    </li>
+                    <li>
+                        <p>Return Date :</p>
+                        <div class="data-row">{{$wo->wo_return_date}}</div>
+                    </li>
+                </ul>
+            </div> 
         </div>
         <div class="bottom-header">
-            <div>
+            <div class='bottom-header-contact'>
                 <p>260300 Writing Creek Cres Unit # E-18, Balzac,</p>
                 <p>[Calgary, T4A 0G3]</p>
                 <p>Phone: 403.452.9892</p>
@@ -46,7 +48,7 @@
     <section class="main-body">
 
         <!-- JOB Table  -->
-        <table class="job-table">
+        <table class="first-table">
             <tr>
                 <th>JOB</th>
                 <th>BILL TO</th>
