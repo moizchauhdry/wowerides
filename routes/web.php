@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WorkOrderController;
@@ -39,6 +40,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/work-order/edit/{id}', [WorkOrderController::class, 'edit'])->name('work-order.edit');
     Route::post('/work-order/update', [WorkOrderController::class, 'update'])->name('work-order.update');
     Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
+
+    // Customer Account
+    Route::get('/customer-account', [CustomerAccountController::class, 'index'])->name('customer-account.index');
+    Route::get('/customer-account/create', [CustomerAccountController::class, 'create'])->name('customer-account.create');
+    Route::get('/customer-account/edit/{id}', [CustomerAccountController::class, 'edit'])->name('customer-account.edit');
+    Route::post('/customer-account/update', [CustomerAccountController::class, 'update'])->name('customer-account.update');
+    Route::get('/customer-account/pdf/{id}', [CustomerAccountController::class, 'pdf'])->name('customer-account.pdf');
 });
 
 require __DIR__ . '/auth.php';

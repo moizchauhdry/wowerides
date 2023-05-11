@@ -47,6 +47,20 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     Work Order
                                 </NavLink>
+                                <NavLink
+                                    :href="route('customer-account.index')"
+                                    :active="
+                                        route().current(
+                                            'customer-account.index'
+                                        ) ||
+                                        route().current(
+                                            'customer-account.create'
+                                        ) ||
+                                        route().current('customer-account.edit')
+                                    "
+                                >
+                                    Customer Account
+                                </NavLink>
                             </div>
                         </div>
 
@@ -163,6 +177,16 @@ const showingNavigationDropdown = ref(false);
                             "
                         >
                             Work Order
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            :href="route('customer-account.index')"
+                            :active="
+                                route().current('customer-account.index') ||
+                                route().current('customer-account.create') ||
+                                route().current('customer-account.edit')
+                            "
+                        >
+                            Customer Account
                         </ResponsiveNavLink>
                     </div>
 
