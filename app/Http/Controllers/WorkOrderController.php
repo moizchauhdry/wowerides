@@ -135,14 +135,14 @@ class WorkOrderController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
         }
 
         try {
-            // Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
+            Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
             Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
         }
 
         return Redirect::route('work-order.index');
