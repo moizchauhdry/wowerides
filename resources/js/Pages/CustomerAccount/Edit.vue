@@ -5,6 +5,8 @@ import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
+import SuccessButton from "@/Components/SuccessButton.vue";
+import { onMounted } from "vue";
 
 import "@vuepic/vue-datepicker/dist/main.css";
 import Multiselect from "@vueform/multiselect";
@@ -67,6 +69,30 @@ const form = useForm({
 const submit = () => {
     form.post(route("customer-account.update"));
 };
+
+const addItem = () => {
+    form.products.push({
+        product_id: "",
+        qty: "",
+        desc: "",
+    });
+};
+
+const removeItem = (index) => {
+    form.products.splice(index, 1);
+};
+
+onMounted(() => {
+    if (!edit_mode) {
+        form.products = [
+            {
+                product_id: "",
+                qty: "",
+                desc: "",
+            },
+        ];
+    }
+});
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>
@@ -247,26 +273,86 @@ const submit = () => {
                             />
 
                             <div
-                                class="grid gap-4 lg:grid-cols-3 md:grid-cols-2 grid-rows-1 my-5"
+                                class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
                             >
                                 <div>
-                                    <InputLabel
-                                        for="products"
-                                        value="Products"
-                                    />
-
-                                    <Multiselect
-                                        :options="product_options"
-                                        v-model="form.products"
-                                        mode="tags"
-                                    />
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.products"
-                                    />
+                                    <SuccessButton
+                                        :disabled="form.processing"
+                                        @click="addItem()"
+                                        type="button"
+                                        class="float-right"
+                                    >
+                                        Add Item
+                                    </SuccessButton>
                                 </div>
                             </div>
+
+                            <template
+                                v-for="(item, index) in form.products"
+                                :key="item.id"
+                            >
+                                <div
+                                    class="grid gap-4 lg:grid-cols-12 md:grid-cols-2 grid-rows-1 my-5"
+                                >
+                                    <div class="col-span-4">
+                                        <InputLabel
+                                            for="products"
+                                            value="Products"
+                                        />
+
+                                        <Multiselect
+                                            style="margin-top: 3px"
+                                            :options="product_options"
+                                            v-model="item.product_id"
+                                        />
+                                    </div>
+                                    <div class="col-span-1">
+                                        <InputLabel
+                                            for="qty"
+                                            value="Quantity"
+                                        />
+
+                                        <TextInput
+                                            id="qty"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="item.qty"
+                                        />
+                                    </div>
+                                    <div class="col-span-7">
+                                        <InputLabel
+                                            for="desc"
+                                            value="Description"
+                                        />
+
+                                        <TextInput
+                                            id="desc"
+                                            type="text"
+                                            class="mt-1 block w-full"
+                                            v-model="item.desc"
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
+                                    v-if="
+                                        index === form.products.length - 1 &&
+                                        index != 0
+                                    "
+                                >
+                                    <div>
+                                        <DangerButton
+                                            :disabled="form.processing"
+                                            type="button"
+                                            class="float-right text-xs"
+                                            @click="removeItem(index)"
+                                        >
+                                            Remove
+                                        </DangerButton>
+                                    </div>
+                                </div>
+                            </template>
 
                             <h4 class="text-2xl font-bold text-center">
                                 Service Information

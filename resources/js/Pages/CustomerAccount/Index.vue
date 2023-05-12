@@ -22,7 +22,7 @@ defineProps({
                 <Link
                     class="float-right focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2 dark:focus:ring-green-900"
                     :href="route('customer-account.create')"
-                    >Add Customer Account</Link
+                    >Add Account</Link
                 >
             </div>
         </template>
@@ -39,6 +39,7 @@ defineProps({
                             >
                                 <tr>
                                     <th scope="col" class="px-6 py-3">Sr. #</th>
+                                    <th scope="col" class="px-6 py-3">Date</th>
                                     <th scope="col" class="px-6 py-3">
                                         Customer
                                     </th>
@@ -54,14 +55,23 @@ defineProps({
                             <tbody>
                                 <tr
                                     class="bg-white border-b light:bg-gray-800 light:border-gray-700"
-                                    v-for="item in customer_accounts.data"
+                                    v-for="(
+                                        item, index
+                                    ) in customer_accounts.data"
                                 >
                                     <td class="px-6 py-4">
-                                        {{ item.id }}
+                                        {{ ++index }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ item.name }}
+                                        {{ item.created_at }}
                                     </td>
+                                    <th
+                                        scope="row"
+                                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap light:text-white"
+                                    >
+                                        {{ item.name }} <br />
+                                        {{ item.email }} <br />
+                                    </th>
                                     <td class="px-6 py-4">
                                         <template
                                             v-for="product in item.products"

@@ -20,6 +20,7 @@ class CustomerAccountController extends Controller
                 'id' => $ca->id,
                 'name' => $ca->name,
                 'email' => $ca->email,
+                'created_at' => $ca->created_at->format('Y-m-d'),
                 'products' => json_decode($ca->products),
                 'services' => json_decode($ca->services),
             ]);
@@ -45,7 +46,11 @@ class CustomerAccountController extends Controller
 
         $selected_products = [];
         foreach (json_decode($ca->products) as $key => $item) {
-            $selected_products[] = $item->product_id;
+            $selected_products[] = [
+                'product_id' => $item->product_id,
+                'qty' => $item->qty,
+                'desc' => $item->desc,
+            ];
         }
 
         $selected_services = [];
@@ -76,13 +81,15 @@ class CustomerAccountController extends Controller
             'city' => 'required',
             'province' => 'required',
             'postal_code' => 'required',
-            'products' => 'required',
             'services' => 'required',
             'payment_method' => 'required',
             'motor_warranty' => 'required',
             'frame_warranty' => 'required',
             'electronics_warranty' => 'required',
             'comments' => 'required',
+            'products.*.product_id' => 'required',
+            'products.*.qty' => 'required',
+            'products.*.desc' => 'required',
         ]);
 
         try {
@@ -92,10 +99,10 @@ class CustomerAccountController extends Controller
             $products_array = [];
             foreach ($request->products as $key => $value) {
                 $products_array[] = [
-                    'product_id' => $value,
-                    'name' => product_name($value),
-                    'qty' => 1,
-                    'desc' => 'TEST'
+                    'product_id' => $value['product_id'],
+                    'name' => product_name($value['product_id']),
+                    'qty' => $value['qty'],
+                    'desc' => $value['desc']
                 ];
             }
 
