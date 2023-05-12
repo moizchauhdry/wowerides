@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WorkOrderCompletedMail;
+use App\Mail\WorkOrderGeneratedMail;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderAddress;
 use App\Models\WorkOrderItem;
@@ -136,13 +138,12 @@ class WorkOrderController extends Controller
             throw $th;
         }
 
-        // try {
-        //     if (!$request->work_order_id) {
-        //         Mail::to($work_order->user_email)->send(new WorkOrderMail($work_order));
-        //     }
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        // }
+        try {
+            // Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
+            Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
+        } catch (\Throwable $th) {
+            throw $th;
+        }
 
         return Redirect::route('work-order.index');
     }
