@@ -2,11 +2,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 defineProps({
-    total_bookings: Object,
-    new_customers: Object,
-    repeat_customers: Object,
-    card_payments: Object,
-    cash_payments: Object,
+    work_orders: Object,
+    customer_accounts: Object,
 });
 </script>
 
@@ -31,60 +28,36 @@ defineProps({
                         aria-labelledby="stats-tab"
                     >
                         <dl
-                            class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-2 xl:grid-cols-5 sm:p-8"
+                            class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-2 xl:grid-cols-3 sm:p-8"
                         >
                             <div
                                 class="flex flex-col items-center justify-center"
                             >
                                 <dt class="mb-2 text-3xl font-extrabold">
-                                    {{ total_bookings }}
+                                    {{ work_orders }}
                                 </dt>
                                 <dd class="text-gray-500 dark:text-gray-400">
-                                    Bookings
+                                    Work Orders
                                 </dd>
                             </div>
-
                             <div
                                 class="flex flex-col items-center justify-center"
                             >
                                 <dt class="mb-2 text-3xl font-extrabold">
-                                    {{ new_customers }}
+                                    {{ customer_accounts }}
                                 </dt>
                                 <dd class="text-gray-500 dark:text-gray-400">
-                                    New Customers
+                                    Customer Account - Electric Vehicles
                                 </dd>
                             </div>
-
                             <div
                                 class="flex flex-col items-center justify-center"
                             >
                                 <dt class="mb-2 text-3xl font-extrabold">
-                                    {{ repeat_customers }}
+                                    {{ customer_accounts }}
                                 </dt>
                                 <dd class="text-gray-500 dark:text-gray-400">
-                                    Repeat Customers
-                                </dd>
-                            </div>
-
-                            <div
-                                class="flex flex-col items-center justify-center"
-                            >
-                                <dt class="mb-2 text-3xl font-extrabold">
-                                    ${{ card_payments }}
-                                </dt>
-                                <dd class="text-gray-500 dark:text-gray-400">
-                                    Card Payments
-                                </dd>
-                            </div>
-
-                            <div
-                                class="flex flex-col items-center justify-center"
-                            >
-                                <dt class="mb-2 text-3xl font-extrabold">
-                                    ${{ cash_payments }}
-                                </dt>
-                                <dd class="text-gray-500 dark:text-gray-400">
-                                    Cash Payments
+                                    Customer Account - Electronics
                                 </dd>
                             </div>
                         </dl>

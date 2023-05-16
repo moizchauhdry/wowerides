@@ -73,6 +73,7 @@ class CustomerAccountController extends Controller
         // dd($request->all());
 
         $request->validate([
+            'account_type' => 'required',
             'name' => 'required',
             'phone_home' => 'required',
             'phone_mobile' => 'required',
@@ -115,6 +116,7 @@ class CustomerAccountController extends Controller
             }
 
             $data = [
+                'account_type' => $request->account_type,
                 'name' => $request->name,
                 'phone_home' => $request->phone_home,
                 'phone_mobile' => $request->phone_mobile,

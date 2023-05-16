@@ -47,8 +47,14 @@ var electronics_warranty_options = [
     { value: 0, label: "No" },
 ];
 
+var account_options = [
+    { value: "Electric Vehicles", label: "Electric Vehicles" },
+    { value: "Electronics", label: "Electronics" },
+];
+
 const form = useForm({
     ca_id: customer_account?.id,
+    account_type: customer_account?.account_type,
     name: customer_account?.name,
     phone_home: customer_account?.phone_home,
     phone_mobile: customer_account?.phone_mobile,
@@ -124,6 +130,23 @@ onMounted(() => {
                             <div
                                 class="grid gap-4 lg:grid-cols-3 md:grid-cols-2 grid-rows-1 my-5"
                             >
+                                <div>
+                                    <InputLabel
+                                        for="account_type"
+                                        value="Account Type"
+                                    />
+
+                                    <Multiselect
+                                        style="margin-top: 3px"
+                                        :options="account_options"
+                                        v-model="form.account_type"
+                                    />
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.account_type"
+                                    />
+                                </div>
+
                                 <div>
                                     <InputLabel for="name" value="Full Name" />
 

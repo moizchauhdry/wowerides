@@ -47,7 +47,7 @@ const form = useForm({
     wo_items: work_order?.items,
 
     wo_subtotal: 0,
-    wo_discount: 0,
+    wo_discount: work_order?.wo_discount,
     wo_tax_rate: 5,
     wo_tax_total: 0,
     wo_grand_total: 0,
@@ -563,9 +563,12 @@ input:disabled {
                                                 DISCOUNT
                                             </div>
                                             <div class="font-bold">
-                                                -${{
-                                                    form.wo_discount.toFixed(2)
-                                                }}
+                                                <TextInput
+                                                    type="number"
+                                                    class="ml-3 w-20"
+                                                    v-model="form.wo_discount"
+                                                    @keyup="getGrandTotal()"
+                                                />
                                             </div>
                                         </div>
                                         <div class="flex justify-between mb-4">

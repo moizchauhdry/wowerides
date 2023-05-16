@@ -139,8 +139,10 @@ class WorkOrderController extends Controller
         }
 
         try {
-            Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
-            Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
+            if (!$request->wo_id) {
+                Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
+                Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
+            }
         } catch (\Throwable $th) {
             // throw $th;
         }

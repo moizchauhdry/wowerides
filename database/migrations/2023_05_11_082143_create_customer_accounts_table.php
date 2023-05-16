@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('customer_accounts', function (Blueprint $table) {
             $table->id();
+            $table->string('account_type', 100);
             $table->string('name', 100);
             $table->string('phone_home', 100)->nullable();
             $table->string('phone_mobile', 100)->nullable();
