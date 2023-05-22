@@ -145,4 +145,17 @@ class CustomerAccountController extends Controller
 
         return Redirect::route('customer-account.index');
     }
+
+    public function pdf($id)
+    {
+        $ca = CustomerAccount::find($id);
+
+        view()->share([
+            'ca' => $ca,
+        ]);
+
+        $pdf = PDF::loadView('pdf.customer-account');
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('customer-account.pdf');
+    }
 }
