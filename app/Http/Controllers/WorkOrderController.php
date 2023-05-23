@@ -144,6 +144,7 @@ class WorkOrderController extends Controller
                 Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
             }
         } catch (\Throwable $th) {
+            dd($th);
             // throw $th;
         }
 
