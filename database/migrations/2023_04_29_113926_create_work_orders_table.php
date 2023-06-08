@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('wo_title', 100);
             $table->string('wo_customer_name', 100);
-            $table->string('wo_bike_brand', 100);
+            $table->string('wo_bike_category', 100);
             $table->string('wo_bike_model', 100);
-            $table->date('wo_date');
+            $table->string('wo_bike_color', 100);
+            $table->string('wo_bike_warranty', 100);
             $table->date('wo_return_date');
-            $table->date('wo_completed_date');
             $table->float('wo_subtotal')->default(0);
             $table->float('wo_discount')->default(0);
             $table->float('wo_tax_rate')->default(0);

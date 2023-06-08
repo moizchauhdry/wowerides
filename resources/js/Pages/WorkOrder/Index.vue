@@ -48,11 +48,9 @@ defineProps({
                                         Customer name
                                     </th>
                                     <th scope="col" class="px-6 py-3">
-                                        Bike Brand
+                                        Category
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Bike Modal
-                                    </th>
+                                    <th scope="col" class="px-6 py-3">Modal</th>
                                     <th scope="col" class="px-6 py-3">Total</th>
                                     <th scope="col" class="px-6 py-3"></th>
                                 </tr>
@@ -72,7 +70,7 @@ defineProps({
                                         <b>{{ work_order.wo_customer_name }}</b>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.wo_bike_brand }}
+                                        {{ work_order.wo_bike_category }}
                                     </td>
                                     <td class="px-6 py-4">
                                         {{ work_order.wo_bike_model }}

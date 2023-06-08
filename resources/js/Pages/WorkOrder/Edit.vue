@@ -26,15 +26,20 @@ var wo_item_categories = [
     { value: 2, label: "Parts and Materials" },
 ];
 
+var wo_bike_categories = [
+    { value: "Electric Bike", label: "Electric Bike" },
+    { value: "Electric Scooter", label: "Electric Scooter" },
+];
+
 const form = useForm({
     wo_id: work_order?.id,
     wo_title: work_order?.wo_title,
     wo_customer_name: work_order?.wo_customer_name,
-    wo_bike_brand: work_order?.wo_bike_brand,
+    wo_bike_category: work_order?.wo_bike_category,
     wo_bike_model: work_order?.wo_bike_model,
-    wo_date: work_order?.wo_date,
+    wo_bike_color: work_order?.wo_bike_color,
+    wo_bike_warranty: work_order?.wo_bike_warranty,
     wo_return_date: work_order?.wo_return_date,
-    wo_completed_date: work_order?.wo_completed_date,
 
     wo_addr_customer_name: work_order?.billing_address?.wo_addr_customer_name,
     wo_addr_str_address: work_order?.billing_address?.wo_addr_str_address,
@@ -155,55 +160,20 @@ input:disabled {
                             >
                                 <div>
                                     <InputLabel
-                                        for="wo_date"
-                                        value="W.O. Date"
-                                        class="mb-1"
+                                        for="wo_title"
+                                        value="Job Title"
                                     />
 
-                                    <VueDatePicker
-                                        v-model="form.wo_date"
-                                        :teleport="true"
-                                    ></VueDatePicker>
+                                    <TextInput
+                                        id="wo_title"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_title"
+                                    />
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.wo_date"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="wo_return_date"
-                                        value="Return Date"
-                                        class="mb-1"
-                                    />
-
-                                    <VueDatePicker
-                                        v-model="form.wo_return_date"
-                                        :teleport="true"
-                                    ></VueDatePicker>
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.wo_return_date"
-                                    />
-                                </div>
-
-                                <div>
-                                    <InputLabel
-                                        for="wo_completed_date"
-                                        value="Completed Date"
-                                        class="mb-1"
-                                    />
-
-                                    <VueDatePicker
-                                        v-model="form.wo_completed_date"
-                                        :teleport="true"
-                                    ></VueDatePicker>
-
-                                    <InputError
-                                        class="mt-2"
-                                        :message="form.errors.wo_completed_date"
+                                        :message="form.errors.wo_title"
                                     />
                                 </div>
 
@@ -228,27 +198,26 @@ input:disabled {
 
                                 <div>
                                     <InputLabel
-                                        for="wo_bike_brand"
-                                        value="Bike Brand"
+                                        for="wo_bike_category"
+                                        value="Category"
                                     />
 
-                                    <TextInput
-                                        id="wo_bike_brand"
-                                        type="text"
-                                        class="mt-1 block w-full"
-                                        v-model="form.wo_bike_brand"
+                                    <Multiselect
+                                        style="margin-top: 3px !important"
+                                        v-model="form.wo_bike_category"
+                                        :options="wo_bike_categories"
                                     />
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.wo_bike_brand"
+                                        :message="form.errors.wo_bike_category"
                                     />
                                 </div>
 
                                 <div>
                                     <InputLabel
                                         for="wo_bike_model"
-                                        value="Bike Model"
+                                        value="Model"
                                     />
 
                                     <TextInput
@@ -266,20 +235,57 @@ input:disabled {
 
                                 <div>
                                     <InputLabel
-                                        for="wo_title"
-                                        value="Job Title"
+                                        for="wo_bike_color"
+                                        value="Color"
                                     />
 
                                     <TextInput
-                                        id="wo_title"
+                                        id="wo_bike_color"
                                         type="text"
                                         class="mt-1 block w-full"
-                                        v-model="form.wo_title"
+                                        v-model="form.wo_bike_color"
                                     />
 
                                     <InputError
                                         class="mt-2"
-                                        :message="form.errors.wo_title"
+                                        :message="form.errors.wo_bike_color"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_bike_warranty"
+                                        value="Warranty"
+                                    />
+
+                                    <TextInput
+                                        id="wo_bike_warranty"
+                                        type="text"
+                                        class="mt-1 block w-full"
+                                        v-model="form.wo_bike_warranty"
+                                    />
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_bike_warranty"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel
+                                        for="wo_return_date"
+                                        value="Return Date"
+                                        class="mb-1"
+                                    />
+
+                                    <VueDatePicker
+                                        v-model="form.wo_return_date"
+                                        :teleport="true"
+                                    ></VueDatePicker>
+
+                                    <InputError
+                                        class="mt-2"
+                                        :message="form.errors.wo_return_date"
                                     />
                                 </div>
                             </div>
@@ -477,7 +483,11 @@ input:disabled {
                                     <div class="col-span-1">
                                         <InputLabel
                                             for="wo_item_hours"
-                                            value="Hours"
+                                            :value="
+                                                item.wo_item_category_id == 1
+                                                    ? 'Hours'
+                                                    : 'Quantity'
+                                            "
                                         />
 
                                         <TextInput

@@ -25,9 +25,9 @@ class WorkOrderController extends Controller
             ->through(fn ($work_order) => [
                 'id' => $work_order->id,
                 'wo_customer_name' => $work_order->wo_customer_name,
-                'wo_bike_brand' => $work_order->wo_bike_brand,
+                'wo_bike_category' => $work_order->wo_bike_category,
                 'wo_bike_model' => $work_order->wo_bike_model,
-                'wo_date' => $work_order->wo_date,
+                'wo_date' => Carbon::parse($work_order->created_at)->format('d-m-Y'),
                 'wo_return_date' => $work_order->wo_return_date,
                 'wo_grand_total' => $work_order->wo_grand_total,
             ]);
@@ -59,48 +59,54 @@ class WorkOrderController extends Controller
     {
         // dd($request->all());
 
-        $request->validate([
-            'wo_date' => 'required',
-            'wo_return_date' => 'required',
-            'wo_title' => 'required',
-            'wo_customer_name' => 'required',
-            'wo_bike_brand' => 'required',
-            'wo_bike_model' => 'required',
-            'wo_completed_date' => 'required',
+        $request->validate(
+            [
+                'wo_title' => 'required',
+                'wo_customer_name' => 'required',
+                'wo_bike_category' => 'required',
+                'wo_bike_color' => 'required',
+                'wo_bike_warranty' => 'required',
+                'wo_bike_model' => 'required',
+                'wo_return_date' => 'required',
 
-            'wo_addr_customer_name' => 'required',
-            'wo_addr_str_address' => 'required',
-            'wo_addr_city' => 'required',
-            'wo_addr_state' => 'required',
-            'wo_addr_zipcode' => 'required',
-            'wo_addr_phone' => 'required',
-            'wo_addr_email' => 'required|email',
+                'wo_addr_customer_name' => 'required',
+                'wo_addr_str_address' => 'required',
+                'wo_addr_city' => 'required',
+                'wo_addr_state' => 'required',
+                'wo_addr_zipcode' => 'required',
+                'wo_addr_phone' => 'required',
+                'wo_addr_email' => 'required|email',
 
-            'wo_items.*.wo_item_category_id' => 'required',
-            'wo_items.*.wo_item_name' => 'required',
-            'wo_items.*.wo_item_hours' => 'required|numeric|gte:1',
-            'wo_items.*.wo_item_rate' => 'required|numeric|gte:0',
-            'wo_items.*.wo_item_line_total' => 'required|numeric|gte:0',
+                'wo_items.*.wo_item_category_id' => 'required',
+                'wo_items.*.wo_item_name' => 'required',
+                'wo_items.*.wo_item_hours' => 'required|numeric|gte:1',
+                'wo_items.*.wo_item_rate' => 'required|numeric|gte:0',
+                'wo_items.*.wo_item_line_total' => 'required|numeric|gte:0',
 
-            'wo_subtotal' => 'required|numeric',
-            'wo_discount' => 'required|numeric',
-            'wo_tax_rate' => 'required|numeric',
-            'wo_tax_total' => 'required|numeric',
-            'wo_grand_total' => 'required|numeric',
-        ]);
+                'wo_subtotal' => 'required|numeric',
+                'wo_discount' => 'required|numeric',
+                'wo_tax_rate' => 'required|numeric',
+                'wo_tax_total' => 'required|numeric',
+                'wo_grand_total' => 'required|numeric',
+            ],
+            [
+                'required' => 'The field is required.',
+                'email' => 'The field must be a valid email.',
+            ]
+        );
 
         try {
 
             DB::beginTransaction();
 
             $work_order = WorkOrder::updateOrCreate(['id' => $request->wo_id], [
-                'wo_date' => Carbon::parse($request->wo_date)->format('Y-m-d'),
-                'wo_return_date' => Carbon::parse($request->wo_return_date)->format('Y-m-d'),
                 'wo_title' => $request->wo_title,
                 'wo_customer_name' => $request->wo_customer_name,
-                'wo_bike_brand' => $request->wo_bike_brand,
+                'wo_bike_category' => $request->wo_bike_category,
                 'wo_bike_model' => $request->wo_bike_model,
-                'wo_completed_date' => Carbon::parse($request->wo_completed_date)->format('Y-m-d'),
+                'wo_bike_color' => $request->wo_bike_color,
+                'wo_bike_warranty' => $request->wo_bike_warranty,
+                'wo_return_date' => Carbon::parse($request->wo_return_date)->format('Y-m-d'),
 
                 'wo_subtotal' => $request->wo_subtotal,
                 'wo_discount' => $request->wo_discount,
@@ -135,7 +141,7 @@ class WorkOrderController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            // throw $th;
+            throw $th;
         }
 
         try {
@@ -144,8 +150,7 @@ class WorkOrderController extends Controller
                 Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
             }
         } catch (\Throwable $th) {
-            dd($th);
-            // throw $th;
+            throw $th;
         }
 
         return Redirect::route('work-order.index');
