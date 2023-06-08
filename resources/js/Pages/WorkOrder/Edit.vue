@@ -78,11 +78,21 @@ const removeItem = (index) => {
 
 const getGrandTotal = () => {
     form.wo_subtotal = 0;
+
+    if (!form.wo_discount) {
+        form.wo_discount = 0;
+    }
+
     form.wo_items.forEach((item) => {
         form.wo_subtotal += parseFloat(item.wo_item_line_total);
     });
+
     form.wo_tax_total =
-        (form.wo_subtotal - form.wo_discount) * (form.wo_tax_rate / 100);
+        parseFloat(form.wo_subtotal - form.wo_discount) *
+        (form.wo_tax_rate / 100);
+
+    console.log(form.wo_discount);
+
     form.wo_grand_total =
         form.wo_subtotal - form.wo_discount + form.wo_tax_total;
 };
@@ -573,9 +583,9 @@ input:disabled {
                                                 DISCOUNT
                                             </div>
                                             <div class="font-bold">
-                                                <TextInput
+                                                $<TextInput
                                                     type="number"
-                                                    class="ml-3 w-20"
+                                                    class="ml-1 w-20"
                                                     v-model="form.wo_discount"
                                                     @keyup="getGrandTotal()"
                                                 />
