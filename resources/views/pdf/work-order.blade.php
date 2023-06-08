@@ -350,13 +350,13 @@
 
         <header>
             <div class="top-header">
-                <img class="wow-logo" src="https://admin.octalsol.com/build/assets/logo-51416f02.png" alt="wow-logo" />
+                <img class="wow-logo" src="{{config('app.url')}}/images/logo.png" alt="wow-logo" />
                 <div class="top-header-list">
                     <h1>WORK ORDER</h1>
                     <ul>
                         <li>
                             <p>W.O. # :</p>
-                            <div class="data-row">[{{$wo->id}}]</div>
+                            <div class="data-row">{{$wo->id}}</div>
                         </li>
                         <li>
                             <p>W.O. Date :</p>
@@ -382,12 +382,12 @@
                         <div class="data-row">{{$wo->wo_customer_name}}</div>
                     </li>
                     <li>
-                        <p>Bike Brand: </p>
-                        <div class="data-row">{{$wo->wo_bike_brand}}</div>
+                        <p>Category: </p>
+                        <div class="data-row">{{$wo->wo_bike_category}}</div>
                     </li>
                     <li>
-                        <p>Bike Model:</p>
-                        <div class="data-row">{{$wo->wo_bike_model}}</div>
+                        <p>Model:</p>
+                        <div class="data-row">{{$wo->wo_bike_model}} {{$wo->wo_bike_color}}</div>
                     </li>
                 </ul>
             </div>
@@ -405,7 +405,7 @@
                     <td>{{$wo->wo_title}}</td>
                     <td>
                         <li>
-                            <p>Customer Name:</p>
+                            <p>Customer Name</p>
                             <div class="data-row">{{$wo->billing_address->wo_addr_customer_name ?? '-'}}</div>
                         </li>
                     </td>
