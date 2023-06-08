@@ -350,7 +350,7 @@
 
         <header>
             <div class="top-header">
-                <img class="wow-logo" src="{{config('app.url')}}/images/logo.png" alt="wow-logo" />
+                <img class="wow-logo" src="https://m.wowentertainmentforlife.ca/images/logo.png" alt="wow-logo" />
                 <div class="top-header-list">
                     <h1>WORK ORDER</h1>
                     <ul>

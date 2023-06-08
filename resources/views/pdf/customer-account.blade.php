@@ -160,7 +160,7 @@
 
     <header>
         <div class="wow-headings">
-            <img class="wow-logo" src="{{config('app.url')}}/images/logo.png" alt="wow-logo" />
+            <img class="wow-logo" src="https://m.wowentertainmentforlife.ca/images/logo.png" alt="wow-logo" />
             <h1>Customer Account Setup Form For EV</h1>
         </div>
         <div class="qr-codes">
