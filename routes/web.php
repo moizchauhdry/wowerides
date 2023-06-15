@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/work-order/edit/{id}', [WorkOrderController::class, 'edit'])->name('work-order.edit');
     Route::post('/work-order/update', [WorkOrderController::class, 'update'])->name('work-order.update');
     Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
+    Route::post('/work-order/complete', [WorkOrderController::class, 'complete'])->name('work-order.complete');
 
     // Customer Account
     Route::get('/customer-account', [CustomerAccountController::class, 'index'])->name('customer-account.index');

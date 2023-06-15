@@ -30,6 +30,7 @@ class WorkOrderController extends Controller
                 'wo_date' => Carbon::parse($work_order->created_at)->format('d-m-Y'),
                 'wo_return_date' => $work_order->wo_return_date,
                 'wo_grand_total' => $work_order->wo_grand_total,
+                'wo_completed' => $work_order->wo_completed,
             ]);
 
         return Inertia::render('WorkOrder/Index', [
@@ -147,7 +148,6 @@ class WorkOrderController extends Controller
         try {
             if (!$request->wo_id) {
                 Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
-                Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($work_order));
             }
         } catch (\Throwable $th) {
             throw $th;
@@ -167,5 +167,21 @@ class WorkOrderController extends Controller
         $pdf = PDF::loadView('pdf.work-order');
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('work-order.pdf');
+    }
+
+    public function complete(Request $request)
+    {
+        try {
+            $wo = WorkOrder::find($request->wo_id);
+            $wo->update([
+                'wo_completed' => 1,
+                'wo_completed_at' => Carbon::parse(Carbon::now()->format('Y-m-d')),
+                'wo_completed_by' => auth()->id(),
+            ]);
+
+            Mail::to($request->wo_addr_email)->send(new WorkOrderCompletedMail($wo));
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 }

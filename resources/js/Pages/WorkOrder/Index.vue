@@ -1,10 +1,38 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, Link } from "@inertiajs/vue3";
+import Modal from "@/Components/Modal.vue";
+import { ref } from "vue";
+import SuccessButton from "@/Components/SuccessButton.vue";
+import DangerButton from "@/Components/DangerButton.vue";
+import { useForm } from "@inertiajs/vue3";
+import CustomLink from "@/Components/CustomLink.vue";
 
 defineProps({
     work_orders: Object,
 });
+
+const confirmingCompleteOrder = ref(false);
+
+const form = useForm({
+    wo_id: "",
+});
+
+const confirmCompleteOrder = (id) => {
+    confirmingCompleteOrder.value = true;
+    form.wo_id = id;
+};
+
+const completeOrder = () => {
+    form.post(route("work-order.complete"), {
+        preserveScroll: true,
+        onSuccess: () => closeModal(),
+    });
+};
+
+const closeModal = () => {
+    confirmingCompleteOrder.value = false;
+};
 </script>
 
 <template>
@@ -57,8 +85,11 @@ defineProps({
                             </thead>
                             <tbody>
                                 <tr
-                                    class="bg-white border-b light:bg-gray-800 light:border-gray-700"
-                                    v-for="work_order in work_orders.data"
+                                    class="border-b light:bg-gray-800 light:border-gray-700"
+                                    :class="work_order.wo_completed == 1 ? 'bg-green-100' : 'bg-white '"
+                                    v-for="(
+                                        work_order, index
+                                    ) in work_orders.data"
                                 >
                                     <td class="px-6 py-4">
                                         {{ work_order.id }}
@@ -79,27 +110,9 @@ defineProps({
                                         ${{ work_order.wo_grand_total }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <Link
-                                            class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-2 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-yellow-900"
-                                            :href="
-                                                route(
-                                                    'work-order.edit',
-                                                    work_order.id
-                                                )
-                                            "
-                                            >Edit</Link
-                                        >
-                                        <a
-                                            :href="
-                                                route(
-                                                    'work-order.pdf',
-                                                    work_order.id
-                                                )
-                                            "
-                                            class="focus:outline-none text-white bg-purple-500 hover:bg-purple-600 focus:ring-2 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-1 mr-2 mb-2 dark:focus:ring-purple-900"
-                                            target="_blank"
-                                            >Invoice</a
-                                        >
+                                        <CustomLink :href="route('work-order.edit',work_order.id)" class="m-1" type="blue">Edit</CustomLink>
+                                        <CustomLink :href="route('work-order.pdf',work_order.id)" target="_blank" type="gray" class="m-1">Invoice</CustomLink>
+                                        <SuccessButton @click="confirmCompleteOrder(work_order.id)" class="m-1" v-if="work_order.wo_completed == 0">Complete</SuccessButton>
                                     </td>
                                 </tr>
                             </tbody>
@@ -108,5 +121,31 @@ defineProps({
                 </div>
             </div>
         </div>
+
+        <Modal :show="confirmingCompleteOrder" @close="closeModal">
+            <div class="p-6">
+                <h2 class="text-lg font-medium text-gray-900">
+                    Are you sure you want to complete the order?
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-600">
+                    Once the work order is marked as completed, the current date
+                    will be assigned to the order, and a work order completion
+                    email will be sent to the relevant user.
+                </p>
+
+                <div class="mt-6 flex justify-end">
+                    <DangerButton @click="closeModal"> Cancel </DangerButton>
+                    <SuccessButton
+                        class="ml-3"
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        @click="completeOrder"
+                    >
+                        Complete
+                    </SuccessButton>
+                </div>
+            </div>
+        </Modal>
     </AuthenticatedLayout>
 </template>
