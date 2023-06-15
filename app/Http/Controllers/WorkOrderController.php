@@ -179,9 +179,9 @@ class WorkOrderController extends Controller
                 'wo_completed_by' => auth()->id(),
             ]);
 
-            Mail::to($wo->wo_addr_email)->send(new WorkOrderCompletedMail($wo));
+            Mail::to($wo->billing_address->wo_addr_email)->send(new WorkOrderCompletedMail($wo));
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
         }
     }
 }
