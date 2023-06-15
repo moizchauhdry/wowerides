@@ -110,8 +110,8 @@ const closeModal = () => {
                                         ${{ work_order.wo_grand_total }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <CustomLink :href="route('work-order.edit',work_order.id)" class="m-1" type="blue">Edit</CustomLink>
-                                        <CustomLink :href="route('work-order.pdf',work_order.id)" target="_blank" type="gray" class="m-1">Invoice</CustomLink>
+                                        <CustomLink :href="route('work-order.edit',work_order.id)" class="m-1">Edit</CustomLink>
+                                        <CustomLink :href="route('work-order.pdf',work_order.id)" target="_blank" class="m-1">Invoice</CustomLink>
                                         <SuccessButton @click="confirmCompleteOrder(work_order.id)" class="m-1" v-if="work_order.wo_completed == 0">Complete</SuccessButton>
                                     </td>
                                 </tr>

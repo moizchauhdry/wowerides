@@ -2,7 +2,7 @@
 defineProps({
     type: {
         type: String,
-        default: 'gray',
+        default: 'blue',
     },
 });
 </script>
