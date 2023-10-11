@@ -10,7 +10,7 @@
 
 <body>
     <div>
-        <p>Dear <b>{{$work_order->wo_customer_name}}</b>,</p>
+        <p>Dear <b>{{$work_order->billing_address->wo_addr_customer_name}}</b>,</p>
 
         <p>
             We are pleased to inform you that your work order with order number <b>{{$work_order->id}}</b> has been

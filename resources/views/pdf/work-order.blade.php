@@ -379,7 +379,7 @@
                 <ul class="bottom-header-list">
                     <li>
                         <p>Customer Name: </p>
-                        <div class="data-row">{{$wo->wo_customer_name}}</div>
+                        <div class="data-row">{{$wo->billing_address->wo_addr_customer_name}}</div>
                     </li>
                     <li>
                         <p>Category: </p>

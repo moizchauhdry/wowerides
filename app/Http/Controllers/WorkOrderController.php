@@ -24,7 +24,7 @@ class WorkOrderController extends Controller
             ->withQueryString()
             ->through(fn ($work_order) => [
                 'id' => $work_order->id,
-                'wo_customer_name' => $work_order->wo_customer_name,
+                'wo_customer_name' => $work_order->billing_address->wo_addr_customer_name,
                 'wo_bike_category' => $work_order->wo_bike_category,
                 'wo_bike_model' => $work_order->wo_bike_model,
                 'wo_date' => Carbon::parse($work_order->created_at)->format('d-m-Y'),
@@ -63,9 +63,11 @@ class WorkOrderController extends Controller
         $request->validate(
             [
                 'wo_title' => 'required',
-                'wo_customer_name' => 'required',
+                // 'wo_customer_name' => 'required',
                 'wo_bike_category' => 'required',
                 'wo_bike_color' => 'required',
+                'wo_sr_no' => 'required',
+                'wo_po_no' => 'required',
                 'wo_bike_warranty' => 'required',
                 'wo_bike_model' => 'required',
                 'wo_return_date' => 'required',
@@ -102,10 +104,12 @@ class WorkOrderController extends Controller
 
             $work_order = WorkOrder::updateOrCreate(['id' => $request->wo_id], [
                 'wo_title' => $request->wo_title,
-                'wo_customer_name' => $request->wo_customer_name,
+                // 'wo_customer_name' => $request->wo_customer_name,
                 'wo_bike_category' => $request->wo_bike_category,
                 'wo_bike_model' => $request->wo_bike_model,
                 'wo_bike_color' => $request->wo_bike_color,
+                'wo_sr_no' => $request->wo_sr_no,
+                'wo_po_no' => $request->wo_po_no,
                 'wo_bike_warranty' => $request->wo_bike_warranty,
                 'wo_return_date' => Carbon::parse($request->wo_return_date)->format('Y-m-d'),
 
