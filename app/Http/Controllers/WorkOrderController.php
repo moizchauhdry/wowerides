@@ -4,13 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Mail\WorkOrderCompletedMail;
 use App\Mail\WorkOrderGeneratedMail;
+use App\Models\User;
 use App\Models\WorkOrder;
 use App\Models\WorkOrderAddress;
 use App\Models\WorkOrderItem;
+use App\Notifications\WorkOrderInvoiceNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -153,6 +156,10 @@ class WorkOrderController extends Controller
             if (!$request->wo_id) {
                 Mail::to($request->wo_addr_email)->send(new WorkOrderGeneratedMail($work_order));
             }
+
+            $work_order_address = WorkOrderAddress::select('wo_addr_email as email')->where('wo_addr_email', $request->wo_addr_email)->first();
+            Notification::send($work_order_address, new WorkOrderInvoiceNotification($work_order));
+
         } catch (\Throwable $th) {
             throw $th;
         }
