@@ -117,6 +117,8 @@ const closeModal = () => {
                                             v-if="work_order.wo_completed == 0">Complete</SuccessButton>
                                         <DangerButton @click="confirmDeleteOrder(work_order.id)" class="m-1">Delete
                                         </DangerButton>
+                                        <CustomLink :href="route('work-order.label', work_order.id)" target="_blank"
+                                            class="m-1" type="purple">Label</CustomLink>
                                     </td>
                                 </tr>
                             </tbody>

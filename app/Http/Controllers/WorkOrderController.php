@@ -208,4 +208,17 @@ class WorkOrderController extends Controller
             // throw $th;
         }
     }
+
+    public function label($id)
+    {
+        $wo = WorkOrder::find($id);
+
+        view()->share([
+            'wo' => $wo,
+        ]);
+
+        $pdf = PDF::loadView('pdf.wo-label');
+        $pdf->setPaper('A4', 'portrait');
+        return $pdf->stream('wo-label.pdf');
+    }
 }
