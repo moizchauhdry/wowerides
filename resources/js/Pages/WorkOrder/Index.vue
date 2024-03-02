@@ -75,28 +75,19 @@ const closeModal = () => {
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 light:bg-gray-700 light:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        W.O. #
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        W.O Date
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Customer name
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Category
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">Modal</th>
+                                    <th scope="col" class="px-6 py-3">W.O ID</th>
+                                    <th scope="col" class="px-6 py-3">W.O Date</th>
+                                    <th scope="col" class="px-6 py-3">Customer name</th>
+                                    <th scope="col" class="px-6 py-3">Category / Modal</th>
+                                    <th scope="col" class="px-6 py-3">Status</th>
                                     <th scope="col" class="px-6 py-3">Total</th>
                                     <th scope="col" class="px-6 py-3"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="border-b light:bg-gray-800 light:border-gray-700"
-                                    :class="work_order.wo_completed == 1 ? 'bg-green-100' : 'bg-white '" v-for="(
-                                        work_order, index
-                                    ) in work_orders.data">
+                                    :class="work_order.wo_completed == 1 ? 'bg-green-100' : 'bg-white '"
+                                    v-for="(work_order, index) in work_orders.data">
                                     <td class="px-6 py-4">
                                         {{ work_order.id }}
                                     </td>
@@ -107,15 +98,16 @@ const closeModal = () => {
                                         <b>{{ work_order.wo_customer_name }}</b>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.wo_bike_category }}
+                                        <b>Category:</b> {{ work_order.wo_bike_category }} <br>
+                                        <b>Model:</b> {{ work_order.wo_bike_model }} <br>
                                     </td>
                                     <td class="px-6 py-4">
-                                        {{ work_order.wo_bike_model }}
+                                        {{ work_order.wo_status }}
                                     </td>
                                     <td class="px-6 py-4">
                                         ${{ work_order.wo_grand_total }}
                                     </td>
-                                    <td class="px-6 py-4">
+                                    <td class="px-8 py-4">
                                         <CustomLink :href="route('work-order.edit', work_order.id)" class="m-1"
                                             type="yellow">
                                             Edit</CustomLink>

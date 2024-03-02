@@ -34,6 +34,7 @@ class WorkOrderController extends Controller
                 'wo_return_date' => $work_order->wo_return_date,
                 'wo_grand_total' => $work_order->wo_grand_total,
                 'wo_completed' => $work_order->wo_completed,
+                'wo_status' => $work_order->wo_status == 2 ? 'Pickup' : 'Pending',
             ]);
 
         return Inertia::render('WorkOrder/Index', [
@@ -74,6 +75,7 @@ class WorkOrderController extends Controller
                 'wo_bike_warranty' => 'required',
                 'wo_bike_model' => 'required',
                 'wo_return_date' => 'required',
+                'wo_status' => 'required',
 
                 'wo_addr_customer_name' => 'required',
                 'wo_addr_str_address' => 'required',
@@ -115,6 +117,7 @@ class WorkOrderController extends Controller
                 'wo_po_no' => $request->wo_po_no,
                 'wo_bike_warranty' => $request->wo_bike_warranty,
                 'wo_return_date' => Carbon::parse($request->wo_return_date)->format('Y-m-d'),
+                'wo_status' => $request->wo_status,
 
                 'wo_subtotal' => $request->wo_subtotal,
                 'wo_discount' => $request->wo_discount,
@@ -187,6 +190,7 @@ class WorkOrderController extends Controller
                 'wo_completed' => 1,
                 'wo_completed_at' => Carbon::parse(Carbon::now()->format('Y-m-d')),
                 'wo_completed_by' => auth()->id(),
+                'wo_status' => 2,
             ]);
 
             Mail::to($wo->billing_address->wo_addr_email)->send(new WorkOrderCompletedMail($wo));

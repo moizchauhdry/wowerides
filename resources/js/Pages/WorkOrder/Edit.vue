@@ -26,9 +26,14 @@ var wo_item_categories = [
     { value: 2, label: "Parts and Materials" },
 ];
 
-var wo_bike_categories = [
-    { value: "Electric Bike", label: "Electric Bike" },
-    { value: "Electric Scooter", label: "Electric Scooter" },
+// var wo_bike_categories = [
+//     { value: "Electric Bike", label: "Electric Bike" },
+//     { value: "Electric Scooter", label: "Electric Scooter" },
+// ];
+
+var wo_statuses = [
+    { value: 1, label: "Pending" },
+    { value: 2, label: "Pickup" },
 ];
 
 const form = useForm({
@@ -42,6 +47,7 @@ const form = useForm({
     wo_po_no: work_order?.wo_po_no,
     wo_bike_warranty: work_order?.wo_bike_warranty,
     wo_return_date: work_order?.wo_return_date,
+    wo_status: work_order?.wo_status,
 
     wo_addr_customer_name: work_order?.billing_address?.wo_addr_customer_name,
     wo_addr_str_address: work_order?.billing_address?.wo_addr_str_address,
@@ -146,6 +152,7 @@ input:disabled {
 </style>
 
 <template>
+
     <Head :title="edit_mode ? 'Edit Work Order' : 'Create Work Order'" />
 
     <AuthenticatedLayout>
@@ -237,8 +244,10 @@ input:disabled {
 
                                 <div>
                                     <InputLabel for="wo_bike_category" value="Category" />
-                                    <Multiselect style="margin-top: 3px !important" v-model="form.wo_bike_category"
-                                        :options="wo_bike_categories" />
+                                    <TextInput id="wo_bike_category" type="text" class="mt-1 block w-full"
+                                        v-model="form.wo_bike_category" />
+                                    <!-- <Multiselect style="margin-top: 3px !important" v-model="form.wo_bike_category"
+                                        :options="wo_bike_categories" /> -->
                                     <InputError class="mt-2" :message="form.errors.wo_bike_category" />
                                 </div>
 
@@ -282,6 +291,13 @@ input:disabled {
                                     <VueDatePicker v-model="form.wo_return_date" :teleport="true"></VueDatePicker>
                                     <InputError class="mt-2" :message="form.errors.wo_return_date" />
                                 </div>
+
+                                <div>
+                                    <InputLabel for="wo_status" value="Status" />
+                                    <Multiselect style="margin-top: 3px !important" v-model="form.wo_status"
+                                        :options="wo_statuses" />
+                                    <InputError class="mt-2" :message="form.errors.wo_status" />
+                                </div>
                             </div>
 
                             <!-- WORK ORDER - INVOICING -->
@@ -300,8 +316,8 @@ input:disabled {
                                 <div class="grid gap-1 lg:grid-cols-8 md:grid-cols-8 grid-rows-1">
                                     <div class="col-span-2">
                                         <InputLabel :value="'Item Category #' + (index + 1)" />
-                                        <Multiselect style="margin-top: 3px !important" v-model="item.wo_item_category_id"
-                                            :options="wo_item_categories" />
+                                        <Multiselect style="margin-top: 3px !important"
+                                            v-model="item.wo_item_category_id" :options="wo_item_categories" />
                                     </div>
 
                                     <div class="col-span-3">
@@ -333,8 +349,8 @@ input:disabled {
                                 <div class="grid gap-4 lg:grid-cols-1 md:grid-cols-1 grid-rows-1"
                                     v-if="index === form.wo_items.length - 1 && index != 0">
                                     <div>
-                                        <DangerButton :disabled="form.processing" type="button" class="float-right text-xs"
-                                            @click="removeItem(index)">
+                                        <DangerButton :disabled="form.processing" type="button"
+                                            class="float-right text-xs" @click="removeItem(index)">
                                             Remove
                                         </DangerButton>
                                     </div>

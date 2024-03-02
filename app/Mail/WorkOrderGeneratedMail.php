@@ -28,7 +28,7 @@ class WorkOrderGeneratedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Work Order Generated - Order Number' . $this->work_order->id
+            subject: 'Work Order Generated - Order Number ' . $this->work_order->id
         );
     }
 
