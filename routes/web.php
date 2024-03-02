@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/work-order/update', [WorkOrderController::class, 'update'])->name('work-order.update');
     Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
     Route::post('/work-order/complete', [WorkOrderController::class, 'complete'])->name('work-order.complete');
+    Route::post('/work-order/delete', [WorkOrderController::class, 'delete'])->name('work-order.delete');
 
     // Customer Account
     Route::get('/customer-account', [CustomerAccountController::class, 'index'])->name('customer-account.index');

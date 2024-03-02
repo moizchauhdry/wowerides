@@ -159,7 +159,6 @@ class WorkOrderController extends Controller
 
             $work_order_address = WorkOrderAddress::select('wo_addr_email as email')->where('wo_addr_email', $request->wo_addr_email)->first();
             Notification::send($work_order_address, new WorkOrderInvoiceNotification($work_order));
-
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -191,6 +190,16 @@ class WorkOrderController extends Controller
             ]);
 
             Mail::to($wo->billing_address->wo_addr_email)->send(new WorkOrderCompletedMail($wo));
+        } catch (\Throwable $th) {
+            // throw $th;
+        }
+    }
+
+    public function delete(Request $request)
+    {
+        try {
+            $wo = WorkOrder::find($request->wo_id);
+            $wo->delete();
         } catch (\Throwable $th) {
             // throw $th;
         }
