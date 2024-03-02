@@ -62,8 +62,12 @@ const closeModal = () => {
                 </h2>
 
                 <Link
-                    class="float-right focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2 dark:focus:ring-green-900"
+                    class="float-right focus:outline-none text-white bg-green-500 hover:bg-green-600 focus:ring-2 focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-1 mr-2 mb-2 dark:focus:ring-green-900"
                     :href="route('work-order.create')">Add Work Order</Link>
+
+                <Link
+                    class="float-right focus:outline-none text-white bg-blue-500 hover:bg-blue-600 focus:ring-2 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1 mr-2 mb-2 dark:focus:ring-blue-900"
+                    :href="route('work-order.pending')">Pending Orders</Link>
             </div>
         </template>
 

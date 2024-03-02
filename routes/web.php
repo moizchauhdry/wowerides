@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/work-order/complete', [WorkOrderController::class, 'complete'])->name('work-order.complete');
     Route::post('/work-order/delete', [WorkOrderController::class, 'delete'])->name('work-order.delete');
     Route::get('/work-order/label/{id}', [WorkOrderController::class, 'label'])->name('work-order.label');
+    Route::get('/work-order/pending', [WorkOrderController::class, 'pending'])->name('work-order.pending');
 
     // Customer Account
     Route::get('/customer-account', [CustomerAccountController::class, 'index'])->name('customer-account.index');

@@ -221,4 +221,13 @@ class WorkOrderController extends Controller
         $pdf->setPaper('A4', 'portrait');
         return $pdf->stream('wo-label.pdf');
     }
+
+    public function pending()
+    {
+        $work_orders = WorkOrder::orderBy('created_at', 'asc')->paginate(100);
+
+        return Inertia::render('WorkOrder/Pending', [
+            'work_orders' => $work_orders,
+        ]);
+    }
 }
