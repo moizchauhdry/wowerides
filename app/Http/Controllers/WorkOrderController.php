@@ -62,8 +62,6 @@ class WorkOrderController extends Controller
 
     public function update(Request $request)
     {
-        // dd($request->all());
-
         $request->validate(
             [
                 'wo_title' => 'required',
@@ -76,6 +74,7 @@ class WorkOrderController extends Controller
                 'wo_bike_model' => 'required',
                 'wo_return_date' => 'required',
                 'wo_status' => 'required',
+                'wo_notes' => 'nullable',
 
                 'wo_addr_customer_name' => 'required',
                 'wo_addr_str_address' => 'required',
@@ -118,6 +117,7 @@ class WorkOrderController extends Controller
                 'wo_bike_warranty' => $request->wo_bike_warranty,
                 'wo_return_date' => Carbon::parse($request->wo_return_date)->format('Y-m-d'),
                 'wo_status' => $request->wo_status,
+                'wo_notes' => $request->wo_notes,
 
                 'wo_subtotal' => $request->wo_subtotal,
                 'wo_discount' => $request->wo_discount,

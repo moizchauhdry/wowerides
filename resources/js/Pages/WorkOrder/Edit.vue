@@ -6,12 +6,13 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm, usePage } from "@inertiajs/vue3";
 import { onMounted } from "vue";
-
 import VueDatePicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import Multiselect from "@vueform/multiselect";
 import SuccessButton from "@/Components/SuccessButton.vue";
 import DangerButton from "@/Components/DangerButton.vue";
+import { EditorContent, useEditor } from '@tiptap/vue-3'
+import StarterKit from '@tiptap/starter-kit'
 
 const props = defineProps({
     edit_mode: Boolean,
@@ -48,6 +49,7 @@ const form = useForm({
     wo_bike_warranty: work_order?.wo_bike_warranty,
     wo_return_date: work_order?.wo_return_date,
     wo_status: work_order?.wo_status,
+    wo_notes: work_order?.wo_notes,
 
     wo_addr_customer_name: work_order?.billing_address?.wo_addr_customer_name,
     wo_addr_str_address: work_order?.billing_address?.wo_addr_str_address,
@@ -112,6 +114,21 @@ const getLineTotal = (index) => {
 
     getGrandTotal();
 };
+
+const editor = useEditor({
+    onUpdate: ({ editor }) => {
+        form.wo_notes = editor.getHTML();
+    },
+    editorProps: {
+        attributes: {
+            class: "border border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm p-2 min-h-[12rem]"
+        },
+    },
+    content: form.wo_notes,
+    extensions: [
+        StarterKit,
+    ],
+})
 
 onMounted(() => {
     if (!edit_mode) {
@@ -297,6 +314,12 @@ input:disabled {
                                     <Multiselect style="margin-top: 3px !important" v-model="form.wo_status"
                                         :options="wo_statuses" />
                                     <InputError class="mt-2" :message="form.errors.wo_status" />
+                                </div>
+
+                                <div>
+                                    <InputLabel for="wo_notes" value="Notes" />
+                                    <editor-content :editor="editor" />
+                                    <InputError class="mt-2" :message="form.errors.wo_notes" />
                                 </div>
                             </div>
 
