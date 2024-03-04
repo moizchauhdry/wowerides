@@ -111,19 +111,20 @@ const closeModal = () => {
                                     <td class="px-6 py-4">
                                         ${{ work_order.wo_grand_total }}
                                     </td>
-                                    <td class="px-8 py-4">
+                                    <td class="px-6 py-4">
                                         <CustomLink :href="route('work-order.edit', work_order.id)" class="m-1"
-                                            type="yellow">
+                                            color="yellow">
                                             Edit</CustomLink>
-                                        <CustomLink :href="route('work-order.pdf', work_order.id)" target="_blank"
-                                            class="m-1" type="purple">Invoice</CustomLink>
                                         <SuccessButton @click="confirmCompleteOrder(work_order.id)" class="m-1"
                                             v-if="work_order.wo_completed == 0">Complete</SuccessButton>
                                         <DangerButton @click="confirmDeleteOrder(work_order.id)" class="m-1">Delete
                                         </DangerButton>
+                                        <CustomLink :href="route('work-order.pdf', work_order.id)" target="_blank"
+                                            class="m-1" color="purple">Print Invoice</CustomLink>
                                         <CustomLink :href="route('work-order.label', work_order.id)" target="_blank"
-                                            class="m-1" type="purple">Label</CustomLink>
+                                            class="m-1" color="blue">Print Label</CustomLink>
                                     </td>
+
                                 </tr>
                             </tbody>
                         </table>
