@@ -113,16 +113,16 @@ const closeModal = () => {
                                     </td>
                                     <td class="px-6 py-4">
                                         <CustomLink :href="route('work-order.edit', work_order.id)" class="m-1"
-                                            color="yellow">
-                                            Edit</CustomLink>
-                                        <SuccessButton @click="confirmCompleteOrder(work_order.id)" class="m-1"
-                                            v-if="work_order.wo_completed == 0">Complete</SuccessButton>
+                                            color="yellow">Edit</CustomLink>
+                                        <CustomLink :href="route('work-order.pdf', work_order.id)" target="_blank"
+                                            class="m-1" color="blue">Invoice</CustomLink>
+                                        <CustomLink :href="route('work-order.label', work_order.id)" target="_blank"
+                                            class="m-1" color="blue">Label</CustomLink>
                                         <DangerButton @click="confirmDeleteOrder(work_order.id)" class="m-1">Delete
                                         </DangerButton>
-                                        <CustomLink :href="route('work-order.pdf', work_order.id)" target="_blank"
-                                            class="m-1" color="purple">Print Invoice</CustomLink>
-                                        <CustomLink :href="route('work-order.label', work_order.id)" target="_blank"
-                                            class="m-1" color="blue">Print Label</CustomLink>
+
+                                        <SuccessButton @click="confirmCompleteOrder(work_order.id)" class="m-1"
+                                            v-if="work_order.wo_completed == 0">Complete</SuccessButton>
                                     </td>
 
                                 </tr>
