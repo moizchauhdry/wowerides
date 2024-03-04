@@ -1,0 +1,1 @@
+import{o as n,f as r}from"./app-484fdd66.js";const _="/build/assets/logo-51416f02.png",a=(o,t)=>{const c=o.__vccOpts||o;for(const[s,e]of t)c[s]=e;return c},i={},p={src:_,alt:""};function f(o,t){return n(),r("img",p)}const m=a(i,[["render",f]]);export{m as A};
