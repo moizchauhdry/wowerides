@@ -113,7 +113,7 @@ const closeModal = () => {
                                     </td>
                                     <td class="px-6 py-4">
                                         <CustomLink :href="route('work-order.edit', work_order.id)" class="m-1"
-                                            color="yellow">Edit</CustomLink>
+                                            color="blue">Edit</CustomLink>
                                         <CustomLink :href="route('work-order.pdf', work_order.id)" target="_blank"
                                             class="m-1" color="blue">Invoice</CustomLink>
                                         <CustomLink :href="route('work-order.label', work_order.id)" target="_blank"
