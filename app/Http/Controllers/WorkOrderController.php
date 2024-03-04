@@ -230,4 +230,14 @@ class WorkOrderController extends Controller
             'work_orders' => $work_orders,
         ]);
     }
+
+    public function detail($id)
+    {
+        $work_order = WorkOrder::with(['billing_address', 'items'])->find($id);
+
+        return Inertia::render('WorkOrder/Detail', [
+            'work_order' => $work_order,
+            'edit_mode' => true,
+        ]);
+    }
 }
