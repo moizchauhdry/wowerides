@@ -152,7 +152,7 @@ class WorkOrderController extends Controller
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();
-            throw $th;
+            // throw $th;
         }
 
         try {
@@ -163,7 +163,7 @@ class WorkOrderController extends Controller
             $work_order_address = WorkOrderAddress::select('wo_addr_email as email')->where('wo_addr_email', $request->wo_addr_email)->first();
             Notification::send($work_order_address, new WorkOrderInvoiceNotification($work_order));
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
         }
 
         return Redirect::route('work-order.index');
