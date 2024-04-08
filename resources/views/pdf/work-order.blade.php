@@ -472,7 +472,7 @@
             </table>
 
             @if ($wo->wo_notes)
-            <div>
+            <div style="margin-top:8px">
                <b>Notes:</b> {!!$wo->wo_notes!!}
             </div>
             @endif
