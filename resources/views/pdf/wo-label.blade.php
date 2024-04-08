@@ -10,7 +10,7 @@
 
 <body>
     <table id="section-to-print">
-        <tr style="text-align: center; font-size:14px">
+        <tr style="text-align: center; font-size:12px">
             <td>
                 <img src="https://m.wowentertainmentforlife.ca/images/logo.png" alt="" style="width: 200px">
             </td>
@@ -18,14 +18,14 @@
 
         <tr style="text-align: center">
             <td>
-                <h4>WORK ORDER #</h4>
+                <h5>WORK ORDER #</h5>
                 <h1>{{$wo->id}}</h1>
             </td>
         </tr>
-        <tr style="text-align: center">
-            <td style="font: 16px">
-                <b>Customer Name:</b> <span>{{$wo->billing_address->wo_addr_customer_name}}</span> <br>
-                <b>Job Title:</b> <span>{{$wo->wo_title}}</span> <br>
+        <tr style="text-align: center;">
+            <td style="font-size: 14px; width: 12px">
+                <b>Customer Name:</b> <br> <span>{{$wo->billing_address->wo_addr_customer_name}}</span> <br> <br>
+                <b>Job Title:</b> <br> <span>{{$wo->wo_title}}</span> <br> <br>
                 <b>Order Date:</b> <span>{{Carbon\Carbon::parse($wo->created_at)->format('Y-m-d')}}</span> <br>
                 <b>Return Date:</b> <span>{{$wo->wo_return_date}}</span>
             </td>
