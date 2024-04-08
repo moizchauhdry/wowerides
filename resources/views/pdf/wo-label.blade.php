@@ -24,7 +24,7 @@
         </tr>
         <tr style="text-align: center">
             <td style="font: 16px">
-                <b>Customer Name:</b> <span>{{$wo->wo_customer_name}}</span> <br>
+                <b>Customer Name:</b> <span>{{$wo->billing_address->wo_addr_customer_name}}</span> <br>
                 <b>Job Title:</b> <span>{{$wo->wo_title}}</span> <br>
                 <b>Order Date:</b> <span>{{Carbon\Carbon::parse($wo->created_at)->format('Y-m-d')}}</span> <br>
                 <b>Return Date:</b> <span>{{$wo->wo_return_date}}</span>
