@@ -514,15 +514,6 @@
                     </div>
                 </li>
             </ul>
-
-            <section>
-                @if ($wo->wo_notes)
-                <div>
-                    <b>Notes:</b> {!!$wo->wo_notes!!}
-                </div>
-                @endif
-            </section>
-
             @endif
 
             @if ($wo->items->where('wo_item_category_id',2)->count() > 0)
@@ -598,6 +589,15 @@
             </ul>
             @endif
 
+        </section>
+
+        
+        <section>
+            @if ($wo->wo_notes)
+            <div>
+                <b>Notes:</b> {!!$wo->wo_notes!!}
+            </div>
+            @endif
         </section>
 
         <footer>
