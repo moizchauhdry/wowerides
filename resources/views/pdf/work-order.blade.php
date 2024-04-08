@@ -371,9 +371,10 @@
             </div>
             <div class="bottom-header">
                 <div class='bottom-header-contact'>
-                    <p>260300 Writing Creek Cres Unit # E-18, Balzac,</p>
-                    <p>[Calgary, T4A 0G3]</p>
-                    <p><b>Phone:</b> 403.452.9892</p>
+                    <p>3516, 26 Street, Bay #3, NE</p>
+                    <p>[Calgary, AB T1Y 4T7]</p>
+                    <p><b>Phone:</b> 587.800.9485 </p>
+                    <p><b>Email:</b> service@wowerides.ca </p>
                     <p><b>Website:</b> wowerides.ca</p>
                 </div>
                 <ul class="bottom-header-list">
@@ -473,7 +474,7 @@
 
             @if ($wo->wo_notes)
             <div style="margin-top:8px">
-               <b>Notes:</b> {!!$wo->wo_notes!!}
+                <b>Notes:</b> {!!$wo->wo_notes!!}
             </div>
             @endif
 
