@@ -472,12 +472,6 @@
                 @endforeach
             </table>
 
-            @if ($wo->wo_notes)
-            <div style="margin-top:8px">
-                <b>Notes:</b> {!!$wo->wo_notes!!}
-            </div>
-            @endif
-
             <ul class="bottom-table-list">
                 <li>
                     <p>SUBTOTAL</p>
@@ -520,6 +514,15 @@
                     </div>
                 </li>
             </ul>
+
+            <section>
+                @if ($wo->wo_notes)
+                <div>
+                    <b>Notes:</b> {!!$wo->wo_notes!!}
+                </div>
+                @endif
+            </section>
+
             @endif
 
             @if ($wo->items->where('wo_item_category_id',2)->count() > 0)
