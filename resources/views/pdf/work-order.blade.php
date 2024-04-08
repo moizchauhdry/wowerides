@@ -471,6 +471,12 @@
                 @endforeach
             </table>
 
+            @if ($wo->wo_notes)
+            <div>
+               <b>Notes:</b> {!!$wo->wo_notes!!}
+            </div>
+            @endif
+
             <ul class="bottom-table-list">
                 <li>
                     <p>SUBTOTAL</p>
