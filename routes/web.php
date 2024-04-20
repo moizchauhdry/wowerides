@@ -39,7 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/work-order/create', [WorkOrderController::class, 'create'])->name('work-order.create');
     Route::get('/work-order/edit/{id}', [WorkOrderController::class, 'edit'])->name('work-order.edit');
     Route::post('/work-order/update', [WorkOrderController::class, 'update'])->name('work-order.update');
-    Route::get('/work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
     Route::post('/work-order/complete', [WorkOrderController::class, 'complete'])->name('work-order.complete');
     Route::post('/work-order/delete', [WorkOrderController::class, 'delete'])->name('work-order.delete');
     Route::get('/work-order/label/{id}', [WorkOrderController::class, 'label'])->name('work-order.label');
@@ -53,5 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/customer-account/update', [CustomerAccountController::class, 'update'])->name('customer-account.update');
     Route::get('/customer-account/pdf/{id}', [CustomerAccountController::class, 'pdf'])->name('customer-account.pdf');
 });
+
+Route::get('work-order/pdf/{id}', [WorkOrderController::class, 'pdf'])->name('work-order.pdf');
 
 require __DIR__ . '/auth.php';
